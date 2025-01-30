@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/header/header.css">
+  <link rel="stylesheet" href="/header/header-media.css">
+  <link rel="stylesheet" href="/heart/heart.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    /* Main Content Styles */
+    .favorites-container {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    .favorites-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 0 8px;
+    }
+
+    .favorites-title {
+      font-size: 28px;
+      color: #1f2937;
+    }
+
+    .favorites-count {
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    .favorites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      padding: 8px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #e5e7eb;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .product-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1f2937;
+      margin-bottom: 12px;
+      height: auto;
+      min-height: 48px;
+      line-height: 1.5;
+    }
+
+    .product-price {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2563EB;
+      margin-bottom: 16px;
+    }
+
+    .favorite-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .favorite-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .favorite-btn.active svg {
+      fill: #2563EB;
+    }
+
+    .favorite-btn svg {
+      fill: #d1d5db;
+      transition: fill 0.2s;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      padding: 12px;
+      background: #2563EB;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .add-to-cart:hover {
+      background: #1d4ed8;
+    }
+
+    .empty-favorites {
+      text-align: center;
+      padding: 48px;
+      background: white;
+      border-radius: 12px;
+      margin-top: 24px;
+    }
+
+    .empty-favorites h2 {
+      color: #1f2937;
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
+
+    .empty-favorites p {
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .favorites-container {
+        padding: 0 8px;
+      }
+
+      .favorites-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .favorites-title {
+        font-size: 24px;
+      }
+
+      .favorites-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .product-card {
+        margin: 0;
+      }
+
+      .product-image {
+        height: 200px;
+      }
+    }
+
+    /* Tablet Styles */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .favorites-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-left">
+        <a href="/index.html">Главная</a>
+        <span>Город: Ташкент</span>
+      </div>
+      <div class="top-bar-right">
+        <span id="langToggle">Язык: Русский</span>
+      </div>
+    </div>
+  </div>
+  <!-- Main Header -->
+  <header class="header">
+    <div class="header-content">
+      <button class="mobile-menu-btn">☰</button>
+      <button class="catalog-btn">
+        <span>☰</span>
+        Каталог
+      </button>
+      <form class="search-form">
+        <input type="text" class="search-input" placeholder="Искать товары...">
+        <button type="submit" class="search-btn">Найти</button>
+      </form>
+      <nav class="nav-icons">
+        <a href="/account/account.html" class="nav-icon">
+          <img src="/img/personal_icon.svg" height="20px" width="20px" alt="">
+          <span>Войти</span>
+        </a>
+        <a href="/heart/heart.html" class="nav-icon">
+          <img src="/img/heart.svg" height="20px" width="20px" alt="">
+          <span>Избранное</span>
+        </a>
+        <a href="/trash/trash.html" class="nav-icon">
+          <img src="/img/market.svg" height="20px" width="20px" alt="">
+          <span>Корзина</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Каталог -->
+    <div class="catalog-menu">
+      <div class="catalog-content">
+        <div class="categories">
+          <div class="category-item" data-category="grocery">
+            <span>🛒 Продукты питания</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="household">
+            <span>🧹 Бытовая химия</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="electronics">
+            <span>📱 Электроника</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="clothing">
+            <span>👗 Одежда и обувь</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="furniture">
+            <span>🪑 Мебель</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+        </div>
+
+        <!-- Подкатегории для продуктов -->
+        <div class="subcategories" data-category="grocery">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Бакалея</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Крупы</a>
+              <a href="#" class="subcategory-item">Макаронные изделия</a>
+              <a href="#" class="subcategory-item">Растительные масла</a>
+              <a href="#" class="subcategory-item">Мука</a>
+              <a href="#" class="subcategory-item">Сахар</a>
+              <a href="#" class="subcategory-item">Соль</a>
+              <a href="#" class="subcategory-item">Чай и кофе</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Кондитерские изделия</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Конфеты</a>
+              <a href="#" class="subcategory-item">Шоколад</a>
+              <a href="#" class="subcategory-item">Печенье</a>
+              <a href="#" class="subcategory-item">Вафли</a>
+              <a href="#" class="subcategory-item">Зефир</a>
+              <a href="#" class="subcategory-item">Торты</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Консервация</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Овощные консервы</a>
+              <a href="#" class="subcategory-item">Фруктовые консервы</a>
+              <a href="#" class="subcategory-item">Мясные консервы</a>
+              <a href="#" class="subcategory-item">Рыбные консервы</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для бытовой химии -->
+        <div class="subcategories" data-category="household">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Моющие средства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Порошки</a>
+              <a href="#" class="subcategory-item">Гели для стирки</a>
+              <a href="#" class="subcategory-item">Средства для посуды</a>
+              <a href="#" class="subcategory-item">Отбеливатели</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Чистящие средства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Для кухни</a>
+              <a href="#" class="subcategory-item">Для ванной</a>
+              <a href="#" class="subcategory-item">Для стекол</a>
+              <a href="#" class="subcategory-item">Универсальные</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Бумажная продукция</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Туалетная бумага</a>
+              <a href="#" class="subcategory-item">Бумажные полотенца</a>
+              <a href="#" class="subcategory-item">Салфетки</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для электроники -->
+        <div class="subcategories" data-category="electronics">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Мобильные устройства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Смартфоны</a>
+              <a href="#" class="subcategory-item">Планшеты</a>
+              <a href="#" class="subcategory-item">Чехлы</a>
+              <a href="#" class="subcategory-item">Зарядные устройства</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Компьютерная техника</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Ноутбуки</a>
+              <a href="#" class="subcategory-item">Комплектующие</a>
+              <a href="#" class="subcategory-item">Мониторы</a>
+              <a href="#" class="subcategory-item">Периферия</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для одежды и обуви -->
+        <div class="subcategories" data-category="clothing">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Одежда</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Футболки</a>
+              <a href="#" class="subcategory-item">Джинсы</a>
+              <a href="#" class="subcategory-item">Костюмы</a>
+              <a href="#" class="subcategory-item">Куртки</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Обувь</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Кроссовки</a>
+              <a href="#" class="subcategory-item">Сандалии</a>
+              <a href="#" class="subcategory-item">Ботинки</a>
+              <a href="#" class="subcategory-item">Туфли</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для мебели -->
+        <div class="subcategories" data-category="furniture">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Для дома</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Столы</a>
+              <a href="#" class="subcategory-item">Стулья</a>
+              <a href="#" class="subcategory-item">Шкафы</a>
+              <a href="#" class="subcategory-item">Кровати</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Офисная мебель</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Кресла</a>
+              <a href="#" class="subcategory-item">Столы для офиса</a>
+              <a href="#" class="subcategory-item">Шкафы для документов</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+  <!-- Mobile Menu -->
+  <div class="mobile-header">
+    <div class="mobile-header-top">
+      <div class="search-container">
+        <input type="text" class="mobile-search" placeholder="Поиск товаров...">
+        <button class="mobile-search-btn">🔍</button>
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <img src="/img/home.svg" alt="" class="nav-icon">
+        <span class="nav-text">Главная</span>
+      </a>
+      <a href="/header/catalog.html" class="nav-item">
+        <img src="/img/catalog-icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Каталог</span>
+      </a>
+      <a href="/heart/heart.html" class="nav-item">
+        <img src="/img/heart.svg" alt="" class="nav-icon">
+        <span class="nav-text">Избранное</span>
+      </a>
+      <a href="/trash/trash.html" class="nav-item">
+        <img src="/img/market.svg" alt="" class="nav-icon">
+        <span class="nav-text">Корзина</span>
+      </a>
+      <a href="/account/account.html" class="nav-item">
+        <img src="/img/personal_icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Аккаунт</span>
+      </a>
+    </nav>
+  </div>
+  <!-- Main Content -->
+  <main class="favorites-container">
+    <div class="favorites-header">
+      <h1 class="favorites-title">Избранное</h1>
+      <span class="favorites-count">0 товаров</span>
+    </div>
+    <div class="favorites-grid" id="favoritesGrid">
+      <!-- Products will be inserted here by JavaScript -->
+    </div>
+  </main>
+  <script src="/header/header.js"></script>
+  <script src="/heart/heart.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+/* Desktop styles (default) */
+.mobile-header {
+  display: none;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+}
+
+.mobile-catalog {
+  display: none;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .top-bar {
+    display: none;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .mobile-header {
+    display: block;
+  }
+
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 12px;
+  }
+
+  .nav-item.active {
+    color: #007bff;
+  }
+
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+
+  .mobile-catalog {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    transition: left 0.3s ease;
+  }
+
+  .mobile-catalog.active {
+    left: 0;
+  }
+
+  .mobile-catalog__subcategories {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    background: white;
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-catalog__subcategories.active {
+    transform: translateX(-100%);
+  }
+
+  .mobile-search-container {
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+  }
+
+  .mobile-search {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  body {
+    margin-bottom: 70px;
+  }
+
+  .mobile-search {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+  }
+
+  .mobile-search-btn {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+}
+
+/* For larger tablets and small desktops */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .header-content {
+    padding: 0 20px;
+  }
+
+  .search-form {
+    width: 40%;
+  }
+
+  .nav-icons {
+    gap: 15px;
+  }
+}

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Pro 128GB</title>
+  <link rel="stylesheet" href="/header/header-media.css">
+  <link rel="stylesheet" href="/header/header.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .image-section {
+      position: relative;
+    }
+
+    .main-image {
+      width: 100%;
+      aspect-ratio: 1.7;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .thumbnail {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .thumbnail:hover {
+      border-color: #ef4444;
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .product-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .badges {
+      display: flex;
+      gap: 10px;
+    }
+
+    .badge {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .sale {
+      background: #ef4444;
+      color: white;
+    }
+
+    .stock {
+      background: #10b981;
+      color: white;
+    }
+
+    .price-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 10px 0;
+    }
+
+    .old-price {
+      color: #6b7280;
+      text-decoration: line-through;
+      font-size: 20px;
+    }
+
+    .new-price {
+      color: #ef4444;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .discount {
+      background: #fecaca;
+      color: #ef4444;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .timer-container {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+
+    .timer-title {
+      color: #4b5563;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .timer {
+      display: flex;
+      gap: 10px;
+    }
+
+    .timer-item {
+      background: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #1f2937;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .spec-label {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .spec-value {
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    .actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .buy-button {
+      flex: 2;
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .buy-button:hover {
+      background: #dc2626;
+    }
+
+    .wishlist-button {
+      flex: 1;
+      background: white;
+      border: 1px solid #d1d5db;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .wishlist-button:hover {
+      background: #f3f4f6;
+    }
+
+    .description-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .tab {
+      padding: 12px 24px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: #6b7280;
+      position: relative;
+    }
+
+    .tab.active {
+      color: #ef4444;
+    }
+
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #ef4444;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px 0;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .description-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #374151;
+      margin-bottom: 20px;
+    }
+
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      background: #f3f4f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      color: #4b5563;
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .specs-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .specs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .specs-table td:first-child {
+      color: #6b7280;
+      width: 40%;
+    }
+
+    .specs-table td:last-child {
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+
+      .product-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 15px;
+      }
+
+      .product-title {
+        font-size: 22px;
+      }
+
+      .new-price {
+        font-size: 26px;
+      }
+
+      .specs {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .description-container {
+        padding: 15px;
+      }
+
+      .tabs {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        white-space: nowrap;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+
+      .features-list {
+        grid-template-columns: 1fr;
+      }
+
+      .description-text {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-left">
+        <a href="/index.html">Главная</a>
+        <span>Город: Ташкент</span>
+      </div>
+      <div class="top-bar-right">
+        <span id="langToggle">Язык: Русский</span>
+      </div>
+    </div>
+  </div>
+  <!-- Main Header -->
+  <header class="header">
+    <div class="header-content">
+      <button class="mobile-menu-btn">☰</button>
+      <button class="catalog-btn">
+        <span>☰</span>
+        Каталог
+      </button>
+      <form class="search-form">
+        <input type="text" class="search-input" placeholder="Искать товары...">
+        <button type="submit" class="search-btn">Найти</button>
+      </form>
+      <nav class="nav-icons">
+        <a href="/account/account.html" class="nav-icon">
+          <img src="/img/personal_icon.svg" height="20px" width="20px" alt="">
+          <span>Войти</span>
+        </a>
+        <a href="/heart/heart.html" class="nav-icon">
+          <img src="/img/heart.svg" height="20px" width="20px" alt="">
+          <span>Избранное</span>
+        </a>
+        <a href="/trash/trash.html" class="nav-icon">
+          <img src="/img/market.svg" height="20px" width="20px" alt="">
+          <span>Корзина</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Каталог -->
+    <div class="catalog-menu">
+      <div class="catalog-content">
+        <div class="categories">
+          <div class="category-item" data-category="grocery">
+            <span>🛒 Продукты питания</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="household">
+            <span>🧹 Бытовая химия</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="electronics">
+            <span>📱 Электроника</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="clothing">
+            <span>👗 Одежда и обувь</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="furniture">
+            <span>🪑 Мебель</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+        </div>
+
+        <!-- Подкатегории для продуктов -->
+        <div class="subcategories" data-category="grocery">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Бакалея</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Крупы</a>
+              <a href="#" class="subcategory-item">Макаронные изделия</a>
+              <a href="#" class="subcategory-item">Растительные масла</a>
+              <a href="#" class="subcategory-item">Мука</a>
+              <a href="#" class="subcategory-item">Сахар</a>
+              <a href="#" class="subcategory-item">Соль</a>
+              <a href="#" class="subcategory-item">Чай и кофе</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Кондитерские изделия</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Конфеты</a>
+              <a href="#" class="subcategory-item">Шоколад</a>
+              <a href="#" class="subcategory-item">Печенье</a>
+              <a href="#" class="subcategory-item">Вафли</a>
+              <a href="#" class="subcategory-item">Зефир</a>
+              <a href="#" class="subcategory-item">Торты</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Консервация</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Овощные консервы</a>
+              <a href="#" class="subcategory-item">Фруктовые консервы</a>
+              <a href="#" class="subcategory-item">Мясные консервы</a>
+              <a href="#" class="subcategory-item">Рыбные консервы</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для бытовой химии -->
+        <div class="subcategories" data-category="household">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Моющие средства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Порошки</a>
+              <a href="#" class="subcategory-item">Гели для стирки</a>
+              <a href="#" class="subcategory-item">Средства для посуды</a>
+              <a href="#" class="subcategory-item">Отбеливатели</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Чистящие средства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Для кухни</a>
+              <a href="#" class="subcategory-item">Для ванной</a>
+              <a href="#" class="subcategory-item">Для стекол</a>
+              <a href="#" class="subcategory-item">Универсальные</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Бумажная продукция</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Туалетная бумага</a>
+              <a href="#" class="subcategory-item">Бумажные полотенца</a>
+              <a href="#" class="subcategory-item">Салфетки</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для электроники -->
+        <div class="subcategories" data-category="electronics">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Мобильные устройства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Смартфоны</a>
+              <a href="#" class="subcategory-item">Планшеты</a>
+              <a href="#" class="subcategory-item">Чехлы</a>
+              <a href="#" class="subcategory-item">Зарядные устройства</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Компьютерная техника</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Ноутбуки</a>
+              <a href="#" class="subcategory-item">Комплектующие</a>
+              <a href="#" class="subcategory-item">Мониторы</a>
+              <a href="#" class="subcategory-item">Периферия</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для одежды и обуви -->
+        <div class="subcategories" data-category="clothing">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Одежда</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Футболки</a>
+              <a href="#" class="subcategory-item">Джинсы</a>
+              <a href="#" class="subcategory-item">Костюмы</a>
+              <a href="#" class="subcategory-item">Куртки</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Обувь</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Кроссовки</a>
+              <a href="#" class="subcategory-item">Сандалии</a>
+              <a href="#" class="subcategory-item">Ботинки</a>
+              <a href="#" class="subcategory-item">Туфли</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для мебели -->
+        <div class="subcategories" data-category="furniture">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Для дома</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Столы</a>
+              <a href="#" class="subcategory-item">Стулья</a>
+              <a href="#" class="subcategory-item">Шкафы</a>
+              <a href="#" class="subcategory-item">Кровати</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Офисная мебель</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Кресла</a>
+              <a href="#" class="subcategory-item">Столы для офиса</a>
+              <a href="#" class="subcategory-item">Шкафы для документов</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+  <!-- Mobile Menu -->
+  <div class="mobile-header">
+    <div class="mobile-header-top">
+      <div class="search-container">
+        <input type="text" class="mobile-search" placeholder="Поиск товаров...">
+        <button class="mobile-search-btn">🔍</button>
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <img src="/img/home.svg" alt="" class="nav-icon">
+        <span class="nav-text">Главная</span>
+      </a>
+      <a href="/header/catalog.html" class="nav-item">
+        <img src="/img/catalog-icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Каталог</span>
+      </a>
+      <a href="/heart/heart.html" class="nav-item">
+        <img src="/img/heart.svg" alt="" class="nav-icon">
+        <span class="nav-text">Избранное</span>
+      </a>
+      <a href="/trash/trash.html" class="nav-item">
+        <img src="/img/market.svg" alt="" class="nav-icon">
+        <span class="nav-text">Корзина</span>
+      </a>
+      <a href="/account/account.html" class="nav-item">
+        <img src="/img/personal_icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Аккаунт</span>
+      </a>
+    </nav>
+  </div>
+  <main class="container">
+    <div class="product-container">
+      <div class="image-section">
+        <img src="/img/phone.jpg" alt="Example Pro" class="main-image">
+        <div class="image-gallery">
+          <img src="/img/phone.jpg" alt="Example Pro - View 1" class="thumbnail">
+          <img src="/img/phone.jpg" alt="Example Pro - View 2" class="thumbnail">
+          <img src="/img/phone.jpg" alt="Example Pro - View 3" class="thumbnail">
+          <img src="/img/phone.jpg" alt="Example Pro - View 4" class="thumbnail">
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h1 class="product-title">Смартфон Example Pro 128GB</h1>
+
+        <div class="badges">
+          <span class="badge sale">Акция</span>
+          <span class="badge stock">В наличии</span>
+        </div>
+
+        <div class="price-section">
+          <span class="old-price">29 999 ₽</span>
+          <span class="new-price">24 999 ₽</span>
+          <span class="discount">-17%</span>
+        </div>
+
+        <div class="specs">
+          <div class="spec-item">
+            <span class="spec-label">Экран</span>
+            <span class="spec-value">6.7" OLED (2778x1284)</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Процессор</span>
+            <span class="spec-value">Example Chip Pro</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Память</span>
+            <span class="spec-value">128 ГБ</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Камера</span>
+            <span class="spec-value">48 Мп + 12 Мп + 12 Мп</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Батарея</span>
+            <span class="spec-value">4500 мАч</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Система</span>
+            <span class="spec-value">Android 14</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="buy-button">Купить сейчас</button>
+          <button class="wishlist-button">В избранное</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="description-container">
+      <div class="tabs">
+        <button class="tab active">Описание</button>
+        <button class="tab">Характеристики</button>
+        <button class="tab">Комплектация</button>
+      </div>
+
+      <div class="tab-content active">
+        <p class="description-text">
+          Example Pro - флагманский смартфон, воплощающий в себе передовые технологии и инновации. Благодаря мощному
+          процессору Example Chip Pro и 128 ГБ встроенной памяти, устройство обеспечивает молниеносную работу и
+          достаточно места для хранения ваших данных.
+        </p>
+
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-icon">📱</div>
+            <div class="feature-text">6.7-дюймовый OLED-экран с технологией ProMotion и частотой обновления 120 Гц</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔋</div>
+            <div class="feature-text">Мощный аккумулятор 4500 мАч с поддержкой быстрой зарядки 45 Вт</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📸</div>
+            <div class="feature-text">Тройная камера 48 Мп с поддержкой 8K-видео и режимом ночной съёмки</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-text">Сканер отпечатков пальцев под экраном и защита Face ID</div>
+          </div>
+        </div>
+
+        <p class="description-text">
+          Смартфон оснащен передовой системой камер с искусственным интеллектом, которая позволяет делать
+          профессиональные снимки в любых условиях. Благодаря поддержке 5G вы всегда будете оставаться на связи на
+          максимальных скоростях.
+        </p>
+      </div>
+
+      <div class="tab-content">
+        <table class="specs-table">
+          <tr>
+            <td>Экран</td>
+            <td>6.7" OLED, 2778x1284, 120 Гц</td>
+          </tr>
+          <tr>
+            <td>Процессор</td>
+            <td>Example Chip Pro, 8-ядерный</td>
+          </tr>
+          <tr>
+            <td>Оперативная память</td>
+            <td>8 ГБ LPDDR5</td>
+          </tr>
+          <tr>
+            <td>Встроенная память</td>
+            <td>128 ГБ UFS 3.1</td>
+          </tr>
+          <tr>
+            <td>Основная камера</td>
+            <td>48 Мп (f/1.8) + 12 Мп (f/2.2, широкоугольная) + 12 Мп (f/2.4, телефото)</td>
+          </tr>
+          <tr>
+            <td>Фронтальная камера</td>
+            <td>32 Мп (f/2.2)</td>
+          </tr>
+          <tr>
+            <td>Аккумулятор</td>
+            <td>4500 мАч, быстрая зарядка 45 Вт</td>
+          </tr>
+          <tr>
+            <td>Операционная система</td>
+            <td>Android 14</td>
+          </tr>
+          <tr>
+            <td>Связь</td>
+            <td>5G, Wi-Fi 6E, Bluetooth 5.3, NFC</td>
+          </tr>
+          <tr>
+            <td>Защита</td>
+            <td>IP68, Gorilla Glass Victus</td>
+          </tr>
+          <tr>
+            <td>Размеры</td>
+            <td>160.8 x 78.1 x 7.65 мм</td>
+          </tr>
+          <tr>
+            <td>Вес</td>
+            <td>228 г</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="tab-content">
+        <p class="description-text">В комплекте поставки:</p>
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-icon">📱</div>
+            <div class="feature-text">Смартфон Example Pro</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔌</div>
+            <div class="feature-text">Зарядное устройство 45 Вт</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔋</div>
+            <div class="feature-text">USB Type-C кабель</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📖</div>
+            <div class="feature-text">Руководство пользователя</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📌</div>
+            <div class="feature-text">Скрепка для извлечения SIM-карты</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎧</div>
+            <div class="feature-text">Проводные наушники</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="/header/header.js"></script>
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        // Add active class to clicked tab
+        tab.classList.add('active');
+
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        // Show corresponding tab content
+        const index = Array.from(tab.parentElement.children).indexOf(tab);
+        document.querySelectorAll('.tab-content')[index].classList.add('active');
+      });
+    });
+
+    // Thumbnail click handler
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const mainImage = document.querySelector('.main-image');
+        const tempSrc = mainImage.src;
+        mainImage.src = thumb.src;
+        thumb.src = tempSrc;
+      });
+    });
+
+  </script>
+</body>
+
+</html>

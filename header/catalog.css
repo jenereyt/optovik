@@ -1,0 +1,112 @@
+.catalog-page {
+  padding-bottom: 70px; /* Для нижнего меню */
+}
+
+.catalog-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  margin-right: 15px;
+}
+
+.back-button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.catalog-header h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.categories-list {
+  padding: 15px;
+}
+
+.category-section {
+  margin-bottom: 15px;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.category-icon {
+  margin-right: 15px;
+  font-size: 24px;
+}
+
+.category-title {
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.arrow-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s;
+}
+
+.subcategories-section {
+  display: none;
+  padding: 15px;
+  background: #f8f8f8;
+  border-radius: 0 0 8px 8px;
+  margin-top: 2px;
+}
+
+.subcategories-section.active {
+  display: block;
+}
+
+.subcategory-group {
+  margin-bottom: 20px;
+}
+
+.subcategory-group h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.subcategory-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subcategory-item {
+  text-decoration: none;
+  color: #333;
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (min-width: 768px) {
+  .catalog-page {
+      max-width: 800px;
+      margin: 0 auto;
+  }
+}

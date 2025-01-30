@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/header/header.css">
+  <link rel="stylesheet" href="/header/header-media.css">
+  <style>
+    /* Base styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      /* margin: 0; */
+      padding: 0;
+    }
+
+    /* Container */
+    .account-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+    }
+
+    /* Sidebar Navigation */
+    .account-nav {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+    }
+
+    .account-nav h2 {
+      font-size: 18px;
+      margin: 0 0 16px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-link {
+      padding: 12px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+
+    .nav-link:hover {
+      background-color: #f4f4f4;
+    }
+
+    .nav-link.active {
+      background-color: #203864;
+      color: white;
+    }
+
+    /* Content Section */
+    .account-content {
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Contact Information */
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .info-group {
+      margin-bottom: 16px;
+    }
+
+    .info-group label {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+    .info-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    .info-group input:disabled {
+      background-color: #f9f9f9;
+      cursor: not-allowed;
+    }
+
+    .edit-btn {
+      background: #203864;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 16px;
+    }
+
+    /* Order History */
+    .order-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .order-number {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .order-date {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .order-status {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .status-completed {
+      background: #f0fdf4;
+      color: #16a34a;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .order-items {
+      margin-bottom: 12px;
+    }
+
+    .order-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .order-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .order-item-info {
+      flex: 1;
+    }
+
+    .order-item-title {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .order-item-price {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .order-total {
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* Payments */
+    .payment-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .payment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .payment-amount {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .payment-type {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .payment-date {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .payment-status {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .balance-info {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .balance-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .balance-total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+    }
+
+    /* Client Section */
+    .client-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .company-details {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .company-row {
+      margin-bottom: 12px;
+    }
+
+    .company-row label {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    .company-row span {
+      font-size: 15px;
+      color: #333;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin: 0 0 24px 0;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eee;
+      font-size: 24px;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .account-container {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .account-nav {
+        position: relative;
+        top: 0;
+      }
+
+      .contact-info,
+      .client-info {
+        grid-template-columns: 1fr;
+      }
+
+      .account-content {
+        padding: 16px;
+      }
+
+      .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
+  <title>Личный кабинет</title>
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-left">
+        <a href="/index.html">Главная</a>
+        <span>Город: Ташкент</span>
+      </div>
+      <div class="top-bar-right">
+        <span id="langToggle">Язык: Русский</span>
+      </div>
+    </div>
+  </div>
+  <!-- Main Header -->
+  <header class="header">
+    <div class="header-content">
+      <button class="mobile-menu-btn">☰</button>
+      <button class="catalog-btn">
+        <span>☰</span>
+        Каталог
+      </button>
+      <form class="search-form">
+        <input type="text" class="search-input" placeholder="Искать товары...">
+        <button type="submit" class="search-btn">Найти</button>
+      </form>
+      <nav class="nav-icons">
+        <a href="/account/account.html" class="nav-icon">
+          <img src="/img/personal_icon.svg" height="20px" width="20px" alt="">
+          <span>Войти</span>
+        </a>
+        <a href="/heart/heart.html" class="nav-icon">
+          <img src="/img/heart.svg" height="20px" width="20px" alt="">
+          <span>Избранное</span>
+        </a>
+        <a href="/trash/trash.html" class="nav-icon">
+          <img src="/img/market.svg" height="20px" width="20px" alt="">
+          <span>Корзина</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Каталог -->
+    <div class="catalog-menu">
+      <div class="catalog-content">
+        <div class="categories">
+          <div class="category-item" data-category="grocery">
+            <span>🛒 Продукты питания</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="household">
+            <span>🧹 Бытовая химия</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="electronics">
+            <span>📱 Электроника</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="clothing">
+            <span>👗 Одежда и обувь</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+          <div class="category-item" data-category="furniture">
+            <span>🪑 Мебель</span>
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+          </div>
+        </div>
+
+        <!-- Подкатегории для продуктов -->
+        <div class="subcategories" data-category="grocery">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Бакалея</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Крупы</a>
+              <a href="#" class="subcategory-item">Макаронные изделия</a>
+              <a href="#" class="subcategory-item">Растительные масла</a>
+              <a href="#" class="subcategory-item">Мука</a>
+              <a href="#" class="subcategory-item">Сахар</a>
+              <a href="#" class="subcategory-item">Соль</a>
+              <a href="#" class="subcategory-item">Чай и кофе</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Кондитерские изделия</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Конфеты</a>
+              <a href="#" class="subcategory-item">Шоколад</a>
+              <a href="#" class="subcategory-item">Печенье</a>
+              <a href="#" class="subcategory-item">Вафли</a>
+              <a href="#" class="subcategory-item">Зефир</a>
+              <a href="#" class="subcategory-item">Торты</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Консервация</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Овощные консервы</a>
+              <a href="#" class="subcategory-item">Фруктовые консервы</a>
+              <a href="#" class="subcategory-item">Мясные консервы</a>
+              <a href="#" class="subcategory-item">Рыбные консервы</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для бытовой химии -->
+        <div class="subcategories" data-category="household">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Моющие средства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Порошки</a>
+              <a href="#" class="subcategory-item">Гели для стирки</a>
+              <a href="#" class="subcategory-item">Средства для посуды</a>
+              <a href="#" class="subcategory-item">Отбеливатели</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Чистящие средства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Для кухни</a>
+              <a href="#" class="subcategory-item">Для ванной</a>
+              <a href="#" class="subcategory-item">Для стекол</a>
+              <a href="#" class="subcategory-item">Универсальные</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Бумажная продукция</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Туалетная бумага</a>
+              <a href="#" class="subcategory-item">Бумажные полотенца</a>
+              <a href="#" class="subcategory-item">Салфетки</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для электроники -->
+        <div class="subcategories" data-category="electronics">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Мобильные устройства</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Смартфоны</a>
+              <a href="#" class="subcategory-item">Планшеты</a>
+              <a href="#" class="subcategory-item">Чехлы</a>
+              <a href="#" class="subcategory-item">Зарядные устройства</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Компьютерная техника</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Ноутбуки</a>
+              <a href="#" class="subcategory-item">Комплектующие</a>
+              <a href="#" class="subcategory-item">Мониторы</a>
+              <a href="#" class="subcategory-item">Периферия</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для одежды и обуви -->
+        <div class="subcategories" data-category="clothing">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Одежда</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Футболки</a>
+              <a href="#" class="subcategory-item">Джинсы</a>
+              <a href="#" class="subcategory-item">Костюмы</a>
+              <a href="#" class="subcategory-item">Куртки</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Обувь</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Кроссовки</a>
+              <a href="#" class="subcategory-item">Сандалии</a>
+              <a href="#" class="subcategory-item">Ботинки</a>
+              <a href="#" class="subcategory-item">Туфли</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подкатегории для мебели -->
+        <div class="subcategories" data-category="furniture">
+          <div class="subcategory-group">
+            <div class="subcategory-title">Для дома</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Столы</a>
+              <a href="#" class="subcategory-item">Стулья</a>
+              <a href="#" class="subcategory-item">Шкафы</a>
+              <a href="#" class="subcategory-item">Кровати</a>
+            </div>
+          </div>
+          <div class="subcategory-group">
+            <div class="subcategory-title">Офисная мебель</div>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Кресла</a>
+              <a href="#" class="subcategory-item">Столы для офиса</a>
+              <a href="#" class="subcategory-item">Шкафы для документов</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+  <!-- Mobile Menu -->
+  <div class="mobile-header">
+    <div class="mobile-header-top">
+      <div class="search-container">
+        <input type="text" class="mobile-search" placeholder="Поиск товаров...">
+        <button class="mobile-search-btn">🔍</button>
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <img src="/img/home.svg" alt="" class="nav-icon">
+        <span class="nav-text">Главная</span>
+      </a>
+      <a href="/header/catalog.html" class="nav-item">
+        <img src="/img/catalog-icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Каталог</span>
+      </a>
+      <a href="/heart/heart.html" class="nav-item">
+        <img src="/img/heart.svg" alt="" class="nav-icon">
+        <span class="nav-text">Избранное</span>
+      </a>
+      <a href="/trash/trash.html" class="nav-item">
+        <img src="/img/market.svg" alt="" class="nav-icon">
+        <span class="nav-text">Корзина</span>
+      </a>
+      <a href="/account/account.html" class="nav-item">
+        <img src="/img/personal_icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Аккаунт</span>
+      </a>
+    </nav>
+  </div>
+  <main>
+    <div class="account-container">
+      <!-- Sidebar Navigation -->
+      <nav class="account-nav">
+        <h2>Личный кабинет</h2>
+        <div class="nav-links">
+          <a href="#contact" class="nav-link active" data-section="contact">Контактные данные</a>
+          <a href="#orders" class="nav-link" data-section="orders">История заказов</a>
+          <a href="#payments" class="nav-link" data-section="payments">Взаиморасчеты</a>
+          <a href="#client" class="nav-link" data-section="client">Заказчик</a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="account-content">
+        <!-- Contact Information Section -->
+        <section id="contact" class="section active">
+          <h1 class="section-header">Контактные данные</h1>
+          <div class="contact-info">
+            <div class="info-group">
+              <label>Имя</label>
+              <input type="text" value="Иван" disabled>
+            </div>
+            <div class="info-group">
+              <label>Фамилия</label>
+              <input type="text" value="Петров" disabled>
+            </div>
+            <div class="info-group">
+              <label>Email</label>
+              <input type="email" value="ivan@example.com" disabled>
+            </div>
+            <div class="info-group">
+              <label>Телефон</label>
+              <input type="tel" value="+7 (999) 123-45-67" disabled>
+            </div>
+          </div>
+          <button class="edit-btn">Редактировать</button>
+        </section>
+
+        <!-- Order History Section -->
+        <section id="orders" class="section">
+          <h1 class="section-header">История заказов</h1>
+          <div class="order-card">
+            <div class="order-header">
+              <div>
+                <div class="order-number">Заказ #12345</div>
+                <div class="order-date">20 января 2024</div>
+              </div>
+              <span class="order-status status-completed">Выполнен</span>
+            </div>
+            <div class="order-items">
+              <div class="order-item">
+                <img src="/img/phone.jpg" alt="Смартфон">
+                <div class="order-item-info">
+                  <div class="order-item-title">Смартфон Samsung Galaxy A54</div>
+                  <div class="order-item-price">31 990 ₽</div>
+                </div>
+              </div>
+            </div>
+            <div class="order-total">Итого: 31 990 ₽</div>
+          </div>
+
+          <div class="order-card">
+            <div class="order-header">
+              <div>
+                <div class="order-number">Заказ #12344</div>
+                <div class="order-date">15 января 2024</div>
+              </div>
+              <span class="order-status status-pending">В обработке</span>
+            </div>
+            <div class="order-items">
+              <div class="order-item">
+                <img src="/img/headphones.jpg" alt="Наушники">
+                <div class="order-item-info">
+                  <div class="order-item-title">Наушники Sony WH-1000XM4</div>
+                  <div class="order-item-price">25 990 ₽</div>
+                </div>
+              </div>
+            </div>
+            <div class="order-total">Итого: 25 990 ₽</div>
+          </div>
+        </section>
+
+        <!-- Payments Section -->
+        <section id="payments" class="section">
+          <h1 class="section-header">Взаиморасчеты</h1>
+          
+          <div class="balance-info">
+            <div class="balance-row">
+              <span>Текущий баланс:</span>
+              <span>-15 000 ₽</span>
+            </div>
+            <div class="balance-row">
+              <span>Предоплата:</span>
+              <span>5 000 ₽</span>
+            </div>
+            <div class="balance-total">
+              <div class="balance-row">
+                <span>Итого к оплате:</span>
+                <span>10 000 ₽</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="payment-card">
+            <div class="payment-header">
+              <div class="payment-amount">25 990 ₽</div>
+              <div class="payment-type">Оплата заказа #12344</div>
+            </div>
+            <div class="payment-date">15 января 2024</div>
+          </div>
+
+          <div class="payment-card">
+            <div class="payment-header">
+              <div class="payment-amount">31 990 ₽</div>
+              <div class="payment-type">Оплата заказа #12345</div>
+            </div>
+            <div class="payment-date">20 января 2024</div>
+          </div>
+        </section>
+
+        <!-- Client Section -->
+        <section id="client" class="section">
+          <h1 class="section-header">Заказчик</h1>
+          
+          <div class="company-details">
+            <div class="company-row">
+              <label>Название компании</label>
+              <span>ООО "Компания"</span>
+            </div>
+            <div class="company-row">
+              <label>ИНН</label>
+              <span>7712345678</span>
+            </div>
+            <div class="company-row">
+              <label>КПП</label>
+              <span>771234567</span>
+            </div>
+            <div class="company-row">
+              <label>ОГРН</label>
+              <span>1234567890123</span>
+            </div>
+            <div class="company-row">
+              <label>Юридический адрес</label>
+              <span>123456, г. Москва, ул. Пушкина, д. 10</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navigation handling
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('.section');
+
+      navLinks.forEach(link => {link.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Remove active class from all links and sections
+          navLinks.forEach(l => l.classList.remove('active'));
+          sections.forEach(s => s.classList.remove('active'));
+          
+          // Add active class to clicked link and corresponding section
+          link.classList.add('active');
+          const sectionId = link.getAttribute('data-section');
+          document.getElementById(sectionId).classList.add('active');
+        });
+      });
+
+      // Edit contact information handling
+      const editBtn = document.querySelector('.edit-btn');
+      const inputs = document.querySelectorAll('.contact-info input');
+      let isEditing = false;
+
+      editBtn.addEventListener('click', () => {
+        isEditing = !isEditing;
+        
+        inputs.forEach(input => {
+          input.disabled = !isEditing;
+        });
+
+        if (isEditing) {
+          editBtn.textContent = 'Сохранить';
+          editBtn.style.backgroundColor = '#16a34a';
+        } else {
+          editBtn.textContent = 'Редактировать';
+          editBtn.style.backgroundColor = '#203864';
+          
+          // Here you would typically send the updated data to your server
+          console.log('Saving contact information...');
+          
+          // Show success message
+          const successMessage = document.createElement('div');
+          successMessage.textContent = 'Изменения сохранены';
+          successMessage.style.color = '#16a34a';
+          successMessage.style.marginTop = '8px';
+          editBtn.parentNode.appendChild(successMessage);
+          
+          // Remove success message after 3 seconds
+          setTimeout(() => {
+            successMessage.remove();
+          }, 3000);
+        }
+      });
+
+      // Optional: Add form validation
+      function validateForm() {
+        const emailInput = document.querySelector('input[type="email"]');
+        const phoneInput = document.querySelector('input[type="tel"]');
+        
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value)) {
+          alert('Пожалуйста, введите корректный email');
+          return false;
+        }
+        
+        // Basic phone validation
+        const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+        if (!phoneRegex.test(phoneInput.value)) {
+          alert('Пожалуйста, введите корректный номер телефона');
+          return false;
+        }
+        
+        return true;
+      }
+    });
+  </script>
+  <script src="/header/header.js"></script>
+</body>
+</html>

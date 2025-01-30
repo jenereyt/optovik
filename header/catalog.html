@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/header.css">
+  <link rel="stylesheet" href="/font/font.css">
+  <link rel="stylesheet" href="./catalog.css">
+  <link rel="stylesheet" href="./header-media.css">
+</head>
+
+<body>
+  <div class="catalog-page">
+    <div class="catalog-header">
+      <a href="/" class="back-button">
+        <img src="/img/arrow-left.svg" alt="Назад">
+        <span>Назад</span>
+      </a>
+      <h1>Каталог</h1>
+    </div>
+
+    <div class="categories-list">
+      <!-- Основные категории -->
+      <div class="category-section">
+        <div class="category-header" data-category="grocery">
+          <div class="category-icon">🛒</div>
+          <div class="category-title">Продукты питания</div>
+          <img src="/img/arrow-right.svg" class="arrow-icon" alt="">
+        </div>
+
+        <!-- Подкатегории -->
+        <div class="subcategories-section" id="grocery-subcategories">
+          <div class="subcategory-group">
+            <h3>Бакалея</h3>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Крупы</a>
+              <a href="#" class="subcategory-item">Макаронные изделия</a>
+              <a href="#" class="subcategory-item">Масла</a>
+              <a href="#" class="subcategory-item">Мука</a>
+              <a href="#" class="subcategory-item">Сахар</a>
+              <a href="#" class="subcategory-item">Соль</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-section">
+        <div class="category-header" data-category="household">
+          <div class="category-icon">🧹</div>
+          <div class="category-title">Бытовая химия</div>
+          <img src="/img/arrow-right.svg" class="arrow-icon" alt="">
+        </div>
+
+        <div class="subcategories-section" id="household-subcategories">
+          <div class="subcategory-group">
+            <h3>Моющие средства</h3>
+            <div class="subcategory-items">
+              <a href="#" class="subcategory-item">Порошки</a>
+              <a href="#" class="subcategory-item">Гели для стирки</a>
+              <a href="#" class="subcategory-item">Средства для посуды</a>
+              <a href="#" class="subcategory-item">Отбеливатели</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Остальные категории аналогично -->
+    </div>
+  </div>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <nav class="bottom-nav">
+      <a href="/index.html" class="nav-item">
+        <img src="/img/home.svg" alt="" class="nav-icon">
+        <span class="nav-text">Главная</span>
+      </a>
+      <a href="/header/catalog.html" class="nav-item">
+        <img src="/img/catalog-icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Каталог</span>
+      </a>
+      <a href="/heart/heart.html" class="nav-item">
+        <img src="/img/heart.svg" alt="" class="nav-icon">
+        <span class="nav-text">Избранное</span>
+      </a>
+      <a href="/trash/trash.html" class="nav-item">
+        <img src="/img/market.svg" alt="" class="nav-icon">
+        <span class="nav-text">Корзина</span>
+      </a>
+      <a href="#" class="nav-item">
+        <img src="/img/personal_icon.svg" alt="" class="nav-icon">
+        <span class="nav-text">Аккаунт</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="./catalog.js"></script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const desktopCatalog = document.querySelector('.catalog-menu');
   const mobileCatalog = document.querySelector('.mobile-catalog');
   const overlay = document.querySelector('.overlay');
-  
+
   // Buttons
   const desktopCatalogBtn = document.querySelector('.catalog-btn');
   const mobileCatalogBtn = document.getElementById('catalogBtn');
@@ -18,81 +18,81 @@ document.addEventListener('DOMContentLoaded', () => {
   // Active page highlighting
   const currentPath = window.location.pathname;
   const navItems = document.querySelectorAll('.nav-item');
-  
+
   navItems.forEach(item => {
-      if (item.getAttribute('href') === currentPath) {
-          item.classList.add('active');
-      }
+    if (item.getAttribute('href') === currentPath) {
+      item.classList.add('active');
+    }
   });
 
   // Desktop catalog functionality
   function toggleDesktopCatalog() {
-      desktopCatalog.classList.toggle('active');
-      overlay.classList.toggle('active');
+    desktopCatalog.classList.toggle('active');
+    overlay.classList.toggle('active');
   }
 
   desktopCatalogBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      toggleDesktopCatalog();
+    e.preventDefault();
+    toggleDesktopCatalog();
   });
 
   // Category hover functionality for desktop
   desktopCategories.forEach(category => {
-      const categoryId = category.dataset.category;
-      const subcategories = document.querySelector(`.subcategories[data-category="${categoryId}"]`);
-      
-      category.addEventListener('mouseenter', () => {
-          document.querySelectorAll('.subcategories').forEach(sub => {
-              sub.classList.remove('active');
-          });
-          if (subcategories) {
-              subcategories.classList.add('active');
-          }
+    const categoryId = category.dataset.category;
+    const subcategories = document.querySelector(`.subcategories[data-category="${categoryId}"]`);
+
+    category.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.subcategories').forEach(sub => {
+        sub.classList.remove('active');
       });
+      if (subcategories) {
+        subcategories.classList.add('active');
+      }
+    });
   });
 
   // Mobile catalog functionality
   function openMobileCatalog() {
-      mobileCatalog.classList.add('active');
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
+    mobileCatalog.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeMobileCatalog() {
-      mobileCatalog.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-      document.querySelectorAll('.mobile-catalog__subcategories.active')
-          .forEach(sub => sub.classList.remove('active'));
+    mobileCatalog.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    document.querySelectorAll('.mobile-catalog__subcategories.active')
+      .forEach(sub => sub.classList.remove('active'));
   }
 
   mobileCatalogBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      openMobileCatalog();
+    e.preventDefault();
+    openMobileCatalog();
   });
 
   mobileCatalogClose?.addEventListener('click', closeMobileCatalog);
 
   // Mobile categories functionality
   mobileCategories.forEach(category => {
-      category.addEventListener('click', () => {
-          const categoryId = category.dataset.category;
-          const subcategories = document.querySelector(
-              `.mobile-catalog__subcategories[data-category="${categoryId}"]`
-          );
-          if (subcategories) {
-              subcategories.classList.add('active');
-          }
-      });
+    category.addEventListener('click', () => {
+      const categoryId = category.dataset.category;
+      const subcategories = document.querySelector(
+        `.mobile-catalog__subcategories[data-category="${categoryId}"]`
+      );
+      if (subcategories) {
+        subcategories.classList.add('active');
+      }
+    });
   });
 
   backBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-          const subcategories = btn.closest('.mobile-catalog__subcategories');
-          if (subcategories) {
-              subcategories.classList.remove('active');
-          }
-      });
+    btn.addEventListener('click', () => {
+      const subcategories = btn.closest('.mobile-catalog__subcategories');
+      if (subcategories) {
+        subcategories.classList.remove('active');
+      }
+    });
   });
 
   // Search functionality
@@ -100,29 +100,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchBtn = document.querySelector('.mobile-search-btn');
 
   searchBtn?.addEventListener('click', () => {
-      if (searchInput.value.trim()) {
-          console.log('Searching for:', searchInput.value);
-      }
+    if (searchInput.value.trim()) {
+      console.log('Searching for:', searchInput.value);
+    }
   });
 
   searchInput?.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-          searchBtn.click();
-      }
+    if (e.key === 'Enter') {
+      searchBtn.click();
+    }
   });
 
   // Close catalogs when clicking outside
   document.addEventListener('click', (e) => {
-      if (!desktopCatalog.contains(e.target) && 
-          !desktopCatalogBtn.contains(e.target) && 
-          desktopCatalog.classList.contains('active')) {
-          toggleDesktopCatalog();
-      }
+    if (!desktopCatalog.contains(e.target) &&
+      !desktopCatalogBtn.contains(e.target) &&
+      desktopCatalog.classList.contains('active')) {
+      toggleDesktopCatalog();
+    }
 
-      if (mobileCatalog.classList.contains('active') && 
-          !mobileCatalog.contains(e.target) && 
-          !mobileCatalogBtn.contains(e.target)) {
-          closeMobileCatalog();
-      }
+    if (mobileCatalog.classList.contains('active') &&
+      !mobileCatalog.contains(e.target) &&
+      !mobileCatalogBtn.contains(e.target)) {
+      closeMobileCatalog();
+    }
   });
 });

@@ -19,17 +19,32 @@ function addToCart(event, button) {
 }
 
 
+const hearts = document.querySelectorAll('.heart');
+const notification = document.getElementById('notification');
 
-function toggleLike(element) {
-  event.preventDefault();
-  event.stopPropagation();
+// Функция для показа уведомлений
+function showNotification(message) {
+  notification.textContent = message;
+  notification.classList.add('show');
 
-  const path = element.querySelector('path');
-  const isLiked = path.getAttribute('fill') === 'none';
-
-  if (isLiked) {
-    path.setAttribute('fill', '#203864'); // Заполняем синим
-  } else {
-    path.setAttribute('fill', 'none'); // Убираем заливку
-  }
+  // Убираем уведомление через 2 секунды
+  setTimeout(() => {
+    notification.classList.remove('show');
+  }, 5000);
 }
+
+// Логика для работы с каждым сердечком
+hearts.forEach(heart => {
+  heart.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.classList.toggle('inverted');
+
+    if (this.classList.contains('inverted')) {
+      showNotification('❤️ Добавлено в избранное');
+    } else {
+      showNotification('💔 Удалено из избранного');
+    }
+  });
+});

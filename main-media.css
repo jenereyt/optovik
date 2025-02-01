@@ -1,8 +1,9 @@
 @media (max-width: 1650px) {
   .container {
-      padding: 15px;
+    padding: 15px;
   }
 }
+
 /* Tablet version */
 @media screen and (max-width: 1024px) {
   .products-grid {
@@ -74,14 +75,13 @@
     width: 14px;
   }
 
-  .heart {
-    width: 8px;
-    height: 8px;
+  .so {
+    top: 5px;
+    right: 5px;
   }
 
-  .heart::before,
-  .heart::after {
-    width: 8px;
-    height: 8px;
+  .heart {
+    width: 18px;
+    height: 18px;
   }
 }

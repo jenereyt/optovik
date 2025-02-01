@@ -7,6 +7,29 @@
 
 body {}
 
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+/* Показываем уведомление */
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 a {
   color: #333;
   text-decoration: none;

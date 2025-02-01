@@ -1,43 +1,35 @@
-// Функция для форматирования чисел с разделителями
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-}
+function addToCart(event, button) {
+  event.preventDefault();
+  event.stopPropagation();
 
-// Функция добавления в корзину
-function addToCart() {
-  alert('Товар добавлен в корзину');
-}
-
-// Функция обновления таймера
-function updateTimer() {
-  const endDate = new Date('2025-02-01T00:00:00').getTime();
-
-  function update() {
-    const now = new Date().getTime();
-    const difference = endDate - now;
-
-    if (difference > 0) {
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-      document.getElementById('days').textContent = `${days}д`;
-      document.getElementById('hours').textContent = `${hours}ч`;
-      document.getElementById('minutes').textContent = `${minutes}м`;
-      document.getElementById('seconds').textContent = `${seconds}с`;
-    }
+  if (button.classList.contains('added-to-cart')) {
+    // Удаление из корзины
+    alert("Товар удалён из корзины!");
+    button.classList.remove('added-to-cart');
+    button.style.backgroundColor = ''; // Возвращение к исходному цвету
+    button.querySelector('img').style.filter = ''; // Убираем инверсию цвета
+  } else {
+    // Добавление в корзину
+    alert("Товар добавлен в корзину!");
+    button.classList.add('added-to-cart');
+    button.style.backgroundColor = '#203864';
+    button.style.transition = 'background-color 0.3s';
+    button.querySelector('img').style.filter = 'invert(1)';
   }
-
-  update();
-  setInterval(update, 1000);
 }
 
-updateTimer();
 
-const heart = document.getElementById("heart");
 
-heart.addEventListener("click", () => {
-  heart.classList.toggle("clicked");
-});
+function toggleLike(element) {
+  event.preventDefault();
+  event.stopPropagation();
 
+  const path = element.querySelector('path');
+  const isLiked = path.getAttribute('fill') === 'none';
+
+  if (isLiked) {
+    path.setAttribute('fill', '#203864'); // Заполняем синим
+  } else {
+    path.setAttribute('fill', 'none'); // Убираем заливку
+  }
+}

@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/sslineu1/public_html/
+    - export DEPLOYPATH=/home/sslineu1/distr.ssline.uz
     - /bin/cp -r * $DEPLOYPATH

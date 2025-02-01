@@ -111,6 +111,11 @@ body {
   color: #16a34a;
   font-size: 13px;
 }
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
 /* Checkbox styles */
 .checkbox-wrapper {

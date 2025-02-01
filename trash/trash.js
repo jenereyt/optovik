@@ -88,7 +88,7 @@ class Cart {
     return `
       <div class="cart-item" data-id="${item.id}">
         <div class="cart-item-top">
-          <input type="checkbox" ${item.selected ? 'checked' : ''}>
+          <input type="checkbox"  class="custom-checkbox" ${item.selected ? 'checked' : ''}>
           <img src="${item.image}" alt="${item.name}">
           <div class="cart-item-info">
             <a href="#" class="cart-item-title">${item.name}</a>
@@ -114,7 +114,7 @@ class Cart {
 
   renderCartSummary() {
     const { total, totalDiscount, finalTotal } = this.calculateTotals();
-    
+
     return `
       ${this.debt > 0 ? `
         <div class="debt-info">

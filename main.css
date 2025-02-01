@@ -63,7 +63,8 @@ body {
 }
 
 .heart {
-  filter: invert(10);
+  /* filter: invert(1); */
+  fill: none;
   cursor: pointer;
   transition: filter 0.3s ease;
   width: 30px;

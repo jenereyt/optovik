@@ -19,6 +19,7 @@ function addToCart(event, button) {
 }
 
 
+// Логика для работы с каждым сердечком
 const hearts = document.querySelectorAll('.heart');
 const notification = document.getElementById('notification');
 
@@ -27,23 +28,23 @@ function showNotification(message) {
   notification.textContent = message;
   notification.classList.add('show');
 
-  // Убираем уведомление через 2 секунды
+  // Убираем уведомление через 5 секунд
   setTimeout(() => {
     notification.classList.remove('show');
   }, 5000);
 }
 
-// Логика для работы с каждым сердечком
-hearts.forEach(heart => {
+// Логика для переключения сердечек
+hearts.forEach((heart) => {
   heart.addEventListener('click', function (event) {
     event.preventDefault();
     event.stopPropagation();
 
-    this.classList.toggle('inverted');
-
-    if (this.classList.contains('inverted')) {
+    if (this.src.includes('heart-to-main.svg')) {
+      this.src = '/img/heart-blue.svg';
       showNotification('❤️ Добавлено в избранное');
     } else {
+      this.src = '/img/heart-to-main.svg';
       showNotification('💔 Удалено из избранного');
     }
   });

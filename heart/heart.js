@@ -1,109 +1,140 @@
-const products = [
-  {
-      id: 1,
-      title: "Смартфон Samsung Galaxy A54",
-      price: "399 990 сум",
-      image: "/img/phone.jpg",
-      isFavorite: true
-  },
-  {
-      id: 2,
-      title: "Наушники Apple AirPods Pro",
-      price: "299 990 сум",
-      image: "/img/phone.jpg",
-      isFavorite: true
-  },
-  {
-      id: 3,
-      title: "Ноутбук Lenovo IdeaPad 3",
-      price: "599 990 сум",
-      image: "/img/phone.jpg",
-      isFavorite: true
-  }
-];
-
 class FavoritesPage {
   constructor() {
-      this.favorites = new Set();
-      this.init();
+    this.favorites = new Set();
+    this.init();
   }
 
   init() {
-      this.renderProducts();
-      this.updateFavoritesCount();
+    this.renderProducts();
+    this.updateFavoritesCount();
   }
 
   renderProducts() {
-      const grid = document.getElementById('favoritesGrid');
-      grid.innerHTML = '';
+    const grid = document.getElementById('favoritesGrid');
+    grid.innerHTML = '';
 
-      if (products.length === 0) {
-          grid.innerHTML = `
-              <div class="empty-favorites">
-                  <h2>В избранном пока пусто</h2>
-                  <p>Добавляйте товары в избранное, чтобы не потерять их</p>
-              </div>
-          `;
-          return;
-      }
+    const favoriteProducts = products.filter(product => product.isFavorite);
 
-      products.forEach(product => {
-          if (product.isFavorite) {
-              const card = this.createProductCard(product);
-              grid.appendChild(card);
-          }
+    if (favoriteProducts.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-favorites">
+          <h2>В избранном пока пусто</h2>
+          <p>Добавляйте товары в избранное, чтобы не потерять их</p>
+        </div>
+      `;
+      return;
+    }
+
+    favoriteProducts.slice(0, 4).forEach(product => {
+      const card = this.createProductCard(product);
+      grid.appendChild(card);
+    });
+
+    if (favoriteProducts.length > 4) {
+      const showMoreBtn = document.createElement('button');
+      showMoreBtn.textContent = 'Показать ещё';
+      showMoreBtn.className = 'show-more-btn';
+      showMoreBtn.addEventListener('click', () => {
+        favoriteProducts.slice(4).forEach(product => {
+          const card = this.createProductCard(product);
+          grid.appendChild(card);
+        });
+        showMoreBtn.remove();
       });
+      grid.appendChild(showMoreBtn);
+    }
   }
 
   createProductCard(product) {
-      const div = document.createElement('div');
-      div.className = 'product-card';
-      div.innerHTML = `
-          <img src="${product.image}" alt="${product.title}" class="product-image">
-          <button class="favorite-btn ${product.isFavorite ? 'active' : ''}" data-id="${product.id}">
-              <svg width="24" height="24" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
+    const div = document.createElement('div');
+    div.className = 'product-card';
+    div.innerHTML = `
+      <div class="product-image-container">
+        <img src="${product.image}" alt="${product.title}" class="product-image">
+        <div class="flex">
+          <div class="discount-badge">-17%</div>
+          <button class="so">
+            <img class="heart" src="${product.isFavorite ? '/img/heart-blue.svg' : '/img/heart.svg'}" alt="Like">
           </button>
-          <div class="product-title">${product.title}</div>
-          <div class="product-price">${product.price}</div>
-          <button class="add-to-cart">В корзину</button>
-      `;
+        </div>
+      </div>
 
-      const favoriteBtn = div.querySelector('.favorite-btn');
-      favoriteBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          this.toggleFavorite(product.id);
-      });
+      <div class="product-info">
+        <h3 class="product-title">${product.title}</h3>
+        <div class="sale-badge">Акция</div>
+        <div class="flex">
+          <div class="price-container">
+            <span class="old-price">29 999 ₽</span>
+            <span class="new-price">${product.price}</span>
+          </div>
+          <button class="add-to-cart">
+            <img src="/img/market.svg" alt="">
+          </button>
+        </div>
+      </div>
+    `;
 
-      const addToCartBtn = div.querySelector('.add-to-cart');
-      addToCartBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          this.addToCart(product.id);
-      });
+    const heartBtn = div.querySelector('.so');
+    heartBtn.addEventListener('click', () => {
+      this.confirmToggleLike(product);
+    });
 
-      return div;
+    const addToCartBtn = div.querySelector('.add-to-cart');
+    addToCartBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.addToCart(product);
+    });
+
+    return div;
   }
-
-  toggleFavorite(productId) {
-      const product = products.find(p => p.id === productId);
-      if (product) {
-          product.isFavorite = !product.isFavorite;
-          this.renderProducts();
-          this.updateFavoritesCount();
+  confirmToggleLike(product) {
+    Swal.fire({
+      title: "Вы уверены?",
+      text: "Вы не сможете это вернуть!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Да, удалить это!",
+      cancelButtonText: "Отмена"
+    }).then((result) => {
+      if (product.isFavorite) {
+        Swal.fire({
+          title: "Удалено!",
+          text: "Ваш товар был удален.",
+          icon: "success"
+        });
+        this.toggleLike(product);
+      } else {
+        this.toggleLike(product);
       }
+    });
   }
 
-  addToCart(productId) {
-      alert(`Товар ${productId} добавлен в корзину`);
+  toggleLike(product) {
+    product.isFavorite = !product.isFavorite;
+    this.renderProducts();
+    this.updateFavoritesCount();
+  }
+
+  addToCart(product) {
+    alert(`Товар "${product.title}" добавлен в корзину`);
   }
 
   updateFavoritesCount() {
-      const count = products.filter(p => p.isFavorite).length;
-      document.querySelector('.favorites-count').textContent = `${count} товаров`;
+    const count = products.filter(p => p.isFavorite).length;
+    document.querySelector('.favorites-count').textContent = `${count} товара`;
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   new FavoritesPage();
 });
+
+const products = [
+  { id: 1, title: "Смартфон Samsung Galaxy A54", price: "399 990 сум", image: "/img/phone.jpg", isFavorite: true },
+  { id: 2, title: "Наушники Apple AirPods Pro", price: "299 990 сум", image: "/img/phone.jpg", isFavorite: false },
+  { id: 3, title: "Ноутбук Lenovo IdeaPad 3", price: "599 990 сум", image: "/img/phone.jpg", isFavorite: true },
+  { id: 4, title: "Ноутбук Lenovo IdeaPad 3", price: "599 990 сум", image: "/img/phone.jpg", isFavorite: true },
+  { id: 5, title: "Ноутбук Lenovo IdeaPad 3", price: "599 990 сум", image: "/img/phone.jpg", isFavorite: true }
+];

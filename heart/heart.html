@@ -2,200 +2,12 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="header/header.css">
-  <link rel="stylesheet" href="header/header-media.css">
-  <link rel="stylesheet" href="heart/heart.css">
+  <link rel="stylesheet" href="/header/header.css">
+  <link rel="stylesheet" href="/header/header-media.css">
+  <link rel="stylesheet" href="/heart/heart.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, system-ui, sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
-    }
-
-    /* Main Content Styles */
-    .favorites-container {
-      max-width: 1200px;
-      margin: 24px auto;
-      padding: 0 16px;
-    }
-
-    .favorites-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding: 0 8px;
-    }
-
-    .favorites-title {
-      font-size: 28px;
-      color: #1f2937;
-    }
-
-    .favorites-count {
-      color: #6b7280;
-      font-size: 16px;
-    }
-
-    .favorites-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
-      padding: 8px;
-    }
-
-    .product-card {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      position: relative;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: 1px solid #e5e7eb;
-    }
-
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-image {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    .product-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: #1f2937;
-      margin-bottom: 12px;
-      height: auto;
-      min-height: 48px;
-      line-height: 1.5;
-    }
-
-    .product-price {
-      font-size: 20px;
-      font-weight: 600;
-      color: #2563EB;
-      margin-bottom: 16px;
-    }
-
-    .favorite-btn {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      background: white;
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s;
-    }
-
-    .favorite-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .favorite-btn.active svg {
-      fill: #2563EB;
-    }
-
-    .favorite-btn svg {
-      fill: #d1d5db;
-      transition: fill 0.2s;
-    }
-
-    .add-to-cart {
-      width: 100%;
-      padding: 12px;
-      background: #2563EB;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-
-    .add-to-cart:hover {
-      background: #1d4ed8;
-    }
-
-    .empty-favorites {
-      text-align: center;
-      padding: 48px;
-      background: white;
-      border-radius: 12px;
-      margin-top: 24px;
-    }
-
-    .empty-favorites h2 {
-      color: #1f2937;
-      margin-bottom: 12px;
-      font-size: 24px;
-    }
-
-    .empty-favorites p {
-      color: #6b7280;
-      font-size: 16px;
-    }
-
-    /* Mobile Styles */
-    @media (max-width: 768px) {
-      .favorites-container {
-        padding: 0 8px;
-      }
-
-      .favorites-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        margin-bottom: 16px;
-      }
-
-      .favorites-title {
-        font-size: 24px;
-      }
-
-      .favorites-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .product-card {
-        margin: 0;
-      }
-
-      .product-image {
-        height: 200px;
-      }
-    }
-
-    /* Tablet Styles */
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .favorites-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -203,7 +15,7 @@
   <div class="top-bar">
     <div class="top-bar-content">
       <div class="top-bar-left">
-        <a href="index.html">Главная</a>
+        <a href="/index.html">Главная</a>
         <span>Город: Ташкент</span>
       </div>
       <div class="top-bar-right">
@@ -224,16 +36,16 @@
         <button type="submit" class="search-btn">Найти</button>
       </form>
       <nav class="nav-icons">
-        <a href="account/account.html" class="nav-icon">
-          <img src="img/personal_icon.svg" height="20px" width="20px" alt="">
+        <a href="/account/account.html" class="nav-icon">
+          <img src="/img/personal_icon.svg" height="20px" width="20px" alt="">
           <span>Войти</span>
         </a>
-        <a href="heart/heart.html" class="nav-icon">
-          <img src="img/heart.svg" height="20px" width="20px" alt="">
+        <a href="/heart/heart.html" class="nav-icon">
+          <img src="/img/heart.svg" height="20px" width="20px" alt="">
           <span>Избранное</span>
         </a>
-        <a href="trash/trash.html" class="nav-icon">
-          <img src="img/market.svg" height="20px" width="20px" alt="">
+        <a href="/trash/trash.html" class="nav-icon">
+          <img src="/img/market.svg" height="20px" width="20px" alt="">
           <span>Корзина</span>
         </a>
       </nav>
@@ -245,23 +57,23 @@
         <div class="categories">
           <div class="category-item" data-category="grocery">
             <span>🛒 Продукты питания</span>
-            <img src="img/arrow-right.svg" width="20px" height="20px" alt="">
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
           </div>
           <div class="category-item" data-category="household">
             <span>🧹 Бытовая химия</span>
-            <img src="img/arrow-right.svg" width="20px" height="20px" alt="">
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
           </div>
           <div class="category-item" data-category="electronics">
             <span>📱 Электроника</span>
-            <img src="img/arrow-right.svg" width="20px" height="20px" alt="">
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
           </div>
           <div class="category-item" data-category="clothing">
             <span>👗 Одежда и обувь</span>
-            <img src="img/arrow-right.svg" width="20px" height="20px" alt="">
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
           </div>
           <div class="category-item" data-category="furniture">
             <span>🪑 Мебель</span>
-            <img src="img/arrow-right.svg" width="20px" height="20px" alt="">
+            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
           </div>
         </div>
 
@@ -409,24 +221,24 @@
     </div>
 
     <nav class="bottom-nav">
-      <a href="index.html" class="nav-item">
-        <img src="img/home.svg" alt="" class="nav-icon">
+      <a href="/index.html" class="nav-item">
+        <img src="/img/home.svg" alt="" class="nav-icon">
         <span class="nav-text">Главная</span>
       </a>
-      <a href="header/catalog.html" class="nav-item">
-        <img src="img/catalog-icon.svg" alt="" class="nav-icon">
+      <a href="/header/catalog.html" class="nav-item">
+        <img src="/img/catalog-icon.svg" alt="" class="nav-icon">
         <span class="nav-text">Каталог</span>
       </a>
-      <a href="heart/heart.html" class="nav-item">
-        <img src="img/heart.svg" alt="" class="nav-icon">
+      <a href="/heart/heart.html" class="nav-item">
+        <img src="/img/heart.svg" alt="" class="nav-icon">
         <span class="nav-text">Избранное</span>
       </a>
-      <a href="trash/trash.html" class="nav-item">
-        <img src="img/market.svg" alt="" class="nav-icon">
+      <a href="/trash/trash.html" class="nav-item">
+        <img src="/img/market.svg" alt="" class="nav-icon">
         <span class="nav-text">Корзина</span>
       </a>
-      <a href="account/account.html" class="nav-item">
-        <img src="img/personal_icon.svg" alt="" class="nav-icon">
+      <a href="/account/account.html" class="nav-item">
+        <img src="/img/personal_icon.svg" alt="" class="nav-icon">
         <span class="nav-text">Аккаунт</span>
       </a>
     </nav>
@@ -441,8 +253,8 @@
       <!-- Products will be inserted here by JavaScript -->
     </div>
   </main>
-  <script src="header/header.js"></script>
-  <script src="heart/heart.js"></script>
+  <script src="/header/header.js"></script>
+  <script src="/heart/heart.js"></script>
 </body>
 
 </html>

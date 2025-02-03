@@ -88,6 +88,10 @@ function sortProducts(method, element) {
 
   if (element) {
     element.classList.add('active');
+
+    // Обновление текста кнопки на выбранную опцию
+    const sortButton = document.getElementById('sortButton').querySelector('span');
+    sortButton.textContent = element.querySelector('span').textContent;
   }
 
   switch (method) {

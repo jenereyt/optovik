@@ -89,27 +89,27 @@ class FavoritesPage {
   }
   confirmToggleLike(product) {
     Swal.fire({
-      title: "Вы уверены?",
+      title: `Удалить "${product.title}" из избранного?`,
       text: "Вы не сможете это вернуть!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Да, удалить это!",
+      confirmButtonText: "Да, удалить!",
       cancelButtonText: "Отмена"
     }).then((result) => {
-      if (product.isFavorite) {
+      if (result.isConfirmed) {
         Swal.fire({
           title: "Удалено!",
-          text: "Ваш товар был удален.",
+          text: `Товар "${product.title}" был удален из избранного.`,
           icon: "success"
+        }).then(() => {
+          this.toggleLike(product);
         });
-        this.toggleLike(product);
-      } else {
-        this.toggleLike(product);
       }
     });
   }
+  
 
   toggleLike(product) {
     product.isFavorite = !product.isFavorite;

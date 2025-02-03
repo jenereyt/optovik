@@ -111,6 +111,7 @@ body {
   color: #16a34a;
   font-size: 13px;
 }
+
 .checkbox-wrapper {
   display: flex;
   align-items: center;
@@ -192,17 +193,31 @@ input[type="checkbox"] {
 }
 
 .delete-btn {
-  background: none;
-  border: none;
-  color: #dc2626;
+  background-color: #f3f4f6;
+  /* светло-серый фон */
+  border: 1px solid #d1d5db;
+  /* мягкая граница */
+  color: #b91c1c;
+  /* тёмно-красный текст */
   cursor: pointer;
-  font-size: 13px;
-  padding: 4px 8px;
-  margin-top: 4px;
+  font-size: 15px;
+  padding: 6px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .delete-btn:hover {
-  text-decoration: underline;
+  background-color: #fca5a5;
+  /* лёгкий красноватый фон при наведении */
+  transform: scale(1.03);
+  /* лёгкое увеличение */
+}
+
+.delete-btn:active {
+  transform: scale(0.98);
+  /* эффект нажатия */
+
 }
 
 .empty-cart {
@@ -293,7 +308,6 @@ input[type="checkbox"] {
 
   .cart-container {
     padding: 8px;
-    
+
   }
 }
-

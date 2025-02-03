@@ -73,8 +73,39 @@ class Cart {
   }
 
   deleteItem(id) {
-    this.items = this.items.filter(item => item.id !== id);
-    this.render();
+    const item = this.items.find(item => item.id === id);
+  
+    Swal.fire({
+      title: "Вы уверены?",
+      text: `Вы хотите удалить "${item.name}"?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Да, удалить!",
+      cancelButtonText: "Отмена"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const cartItem = document.querySelector(`.cart-item[data-id="${id}"]`);
+  
+        if (cartItem) {
+          cartItem.classList.add('fade-out');
+  
+          setTimeout(() => {
+            this.items = this.items.filter(item => item.id !== id);
+            this.render();
+  
+            Swal.fire({
+              title: "Удалено!",
+              text: "Товар был удалён из корзины.",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false
+            });
+          }, 300); // Время соответствует CSS-анимации
+        }
+      }
+    });
   }
 
   formatPrice(price) {
@@ -88,7 +119,7 @@ class Cart {
     return `
       <div class="cart-item" data-id="${item.id}">
         <div class="cart-item-top">
-          <input type="checkbox"  class="custom-checkbox" ${item.selected ? 'checked' : ''}>
+          <input type="checkbox" class="custom-checkbox" ${item.selected ? 'checked' : ''}>
           <img src="${item.image}" alt="${item.name}">
           <div class="cart-item-info">
             <a href="#" class="cart-item-title">${item.name}</a>

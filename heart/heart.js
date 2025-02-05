@@ -1,12 +1,14 @@
 class FavoritesPage {
   constructor() {
     this.favorites = new Set();
+    this.cart = new Set(); // Множество для корзины
     this.init();
   }
 
   init() {
     this.renderProducts();
     this.updateFavoritesCount();
+    this.updateCartCount(); // Обновление количества товаров в корзине
   }
 
   renderProducts() {
@@ -82,11 +84,12 @@ class FavoritesPage {
     const addToCartBtn = div.querySelector('.add-to-cart');
     addToCartBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      this.addToCart(product);
+      this.addToCart(product, addToCartBtn);
     });
 
     return div;
   }
+
   confirmToggleLike(product) {
     Swal.fire({
       title: `Удалить "${product.title}" из избранного?`,
@@ -109,7 +112,6 @@ class FavoritesPage {
       }
     });
   }
-  
 
   toggleLike(product) {
     product.isFavorite = !product.isFavorite;
@@ -117,13 +119,32 @@ class FavoritesPage {
     this.updateFavoritesCount();
   }
 
-  addToCart(product) {
-    alert(`Товар "${product.title}" добавлен в корзину`);
+  addToCart(product, button) {
+    if (this.cart.has(product.id)) {
+      // Если товар уже в корзине, то его нужно удалить
+      this.cart.delete(product.id);
+      alert("Товар удалён из корзины!");
+      button.style.backgroundColor = ''; // Возвращение к исходному цвету
+      button.querySelector('img').style.filter = ''; // Убираем инверсию цвета
+    } else {
+      // Если товара нет в корзине, добавляем его
+      this.cart.add(product.id);
+      alert("Товар   добавлен в корзину!");
+      button.style.backgroundColor = '#203864';
+      button.style.transition = 'background-color 0.3s';
+      button.querySelector('img').style.filter = 'invert(1)';
+    }
+    this.updateCartCount();
+  }
+
+  updateCartCount() {
+    const count = this.cart.size;
+    document.querySelector('.cart-count').textContent = `${count} товара(ов) в корзине`;
   }
 
   updateFavoritesCount() {
     const count = products.filter(p => p.isFavorite).length;
-    document.querySelector('.favorites-count').textContent = `${count} товара`;
+    document.querySelector('.favorites-count').textContent = `${count} товара(ов) в избранном`;
   }
 }
 
@@ -138,3 +159,26 @@ const products = [
   { id: 4, title: "Ноутбук Lenovo IdeaPad 3", price: "599 990 сум", image: "/img/phone.jpg", isFavorite: true },
   { id: 5, title: "Ноутбук Lenovo IdeaPad 3", price: "599 990 сум", image: "/img/phone.jpg", isFavorite: true }
 ];
+
+function showAddToCartNotification() {
+  const message = "Товар добавлен в корзину!";
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+  
+  // Добавляем уведомление в контейнер
+  const container = document.getElementById('notification-container');
+  container.appendChild(notification);
+
+  // Показываем уведомление
+  setTimeout(() => {
+    notification.classList.add('show');
+  }, 10); // Небольшая задержка для анимации
+
+  // Убираем уведомление через 5 секунд
+  setTimeout(() => {
+    notification.classList.remove('show');
+    // Удаляем уведомление из DOM после анимации
+    setTimeout(() => notification.remove(), 300); // Убираем через время, чтобы анимация успела завершиться
+  }, 5000);
+}

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileCatalog = document.querySelector('.mobile-catalog');
   const overlay = document.querySelector('.overlay');
 
-  // Buttons
+  // Buttonsё
   const desktopCatalogBtn = document.querySelector('.catalog-btn');
   const mobileCatalogBtn = document.getElementById('catalogBtn');
   const mobileCatalogClose = document.querySelector('.mobile-catalog__close');

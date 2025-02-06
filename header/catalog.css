@@ -1,5 +1,6 @@
 .catalog-page {
-  padding-bottom: 70px; /* Для нижнего меню */
+  padding-bottom: 70px;
+  /* Для нижнего меню */
 }
 
 .catalog-header {
@@ -9,8 +10,39 @@
   padding: 15px;
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
+}
+
+.mobile-catalog-page {
+  padding: 1rem;
+}
+
+.mobile-catalog-page h1 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.mobile-catalog-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobile-category {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mobile-back-btn {
+  background: none;
+  border: none;
+  color: #203864;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .back-button {
@@ -46,7 +78,7 @@
   padding: 15px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
@@ -106,7 +138,7 @@
 /* Медиа-запросы для адаптивности */
 @media (min-width: 768px) {
   .catalog-page {
-      max-width: 800px;
-      margin: 0 auto;
+    max-width: 800px;
+    margin: 0 auto;
   }
 }

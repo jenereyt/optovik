@@ -9,697 +9,300 @@
   <link rel="stylesheet" href="/main.css">
   <link rel="stylesheet" href="/header/header-media.css">
   <link rel="stylesheet" href="/main-media.css">
+  <link rel="stylesheet" href="/categories/categories.css">
+  <link rel="stylesheet" href="/header/catalog.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="top-bar-content">
-      <div class="top-bar-left">
-        <a href="/index.html">Главная</a>
-        <span>Город: Ташкент</span>
-      </div>
-      <div class="top-bar-right">
-        <span id="langToggle">Язык: Русский</span>
+  <div>
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-content">
+        <div class="top-bar-left">
+          <a href="/index.html">Главная</a>
+          <span>Город: Ташкент</span>
+        </div>
+        <div class="top-bar-right">
+          <span id="langToggle">Язык: Русский</span>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Main Header -->
-  <header class="header">
-    <div class="header-content">
-      <button class="mobile-menu-btn">☰</button>
-      <button class="catalog-btn">
-        <span>☰</span>
-        Каталог
-      </button>
-      <form class="search-form">
-        <input type="text" class="search-input" placeholder="Искать товары...">
-        <button type="submit" class="search-btn">Найти</button>
-      </form>
-      <nav class="nav-icons">
-        <a href="/account/account.html" class="nav-icon">
-          <img src="/img/personal_icon.svg" height="20px" width="20px" alt="">
-          <span>Войти</span>
+    <!-- Main Header -->
+    <header class="header">
+      <div class="header-content">
+        <button class="mobile-menu-btn">☰</button>
+        <button class="catalog-btn">
+          <span>☰</span>
+          Каталог
+        </button>
+        <form class="search-form">
+          <input type="text" class="search-input" placeholder="Искать товары...">
+          <button type="submit" class="search-btn">Найти</button>
+        </form>
+        <nav class="nav-icons">
+          <a href="/account/account.html" class="nav-icon">
+            <img src="/img/personal_icon.svg" height="20px" width="20px" alt="">
+            <span>Войти</span>
+          </a>
+          <a href="/heart/heart.html" class="nav-icon">
+            <img src="/img/heart.svg" height="20px" width="20px" alt="">
+            <span>Избранное</span>
+          </a>
+          <a href="/trash/trash.html" class="nav-icon">
+            <img src="/img/market.svg" height="20px" width="20px" alt="">
+            <span>Корзина</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Каталог -->
+      <div class="catalog-menu">
+        <div class="catalog-content">
+          <!-- Категории -->
+          <div class="categories">
+            <div class="category-item" data-category="grocery">
+              <span>🛒 Продукты питания</span>
+              <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+            </div>
+            <div class="category-item" data-category="household">
+              <span>🧹 Бытовая химия</span>
+              <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+            </div>
+            <div class="category-item" data-category="electronics">
+              <span>📱 Электроника</span>
+              <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+            </div>
+            <div class="category-item" data-category="clothing">
+              <span>👗 Одежда и обувь</span>
+              <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+            </div>
+            <div class="category-item" data-category="furniture">
+              <span>🪑 Мебель</span>
+              <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
+            </div>
+          </div>
+          <!-- Подкатегории -->
+          <div>
+            <div class="subcategories" data-category="grocery">
+              <div class="subcategory-group">
+                <div class="subcategory-title">Бакалея</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="grains">Крупы</div>
+                  <div class="subcategory-item" data-category="pasta">Макаронные изделия</div>
+                  <div class="subcategory-item" data-category="oils">Растительные масла</div>
+                  <div class="subcategory-item" data-category="flour">Мука</div>
+                  <div class="subcategory-item" data-category="sugar">Сахар</div>
+                  <div class="subcategory-item" data-category="salt">Соль</div>
+                  <div class="subcategory-item" data-category="tea-coffee">Чай и кофе</div>
+                </div>
+              </div>
+              <div class="subcategory-group">
+                <div class="subcategory-title">Кондитерские изделия</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="candies">Конфеты</div>
+                  <div class="subcategory-item" data-category="chocolate">Шоколад</div>
+                  <div class="subcategory-item" data-category="cookies">Печенье</div>
+                  <div class="subcategory-item" data-category="waffles">Вафли</div>
+                  <div class="subcategory-item" data-category="marshmallow">Зефир</div>
+                  <div class="subcategory-item" data-category="cakes">Торты</div>
+                </div>
+              </div>
+              <div class="subcategory-group">
+                <div class="subcategory-title">Консервация</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="vegetables-cans">Овощные консервы</div>
+                  <div class="subcategory-item" data-category="fruits-cans">Фруктовые консервы</div>
+                  <div class="subcategory-item" data-category="meat-cans">Мясные консервы</div>
+                  <div class="subcategory-item" data-category="fish-cans">Рыбные консервы</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Подкатегории для бытовой химии -->
+            <div class="subcategories" data-category="household">
+              <div class="subcategory-group">
+                <div class="subcategory-title">Моющие средства</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="washing-powders">Порошки</div>
+                  <div class="subcategory-item" data-category="washing-gels">Гели для стирки</div>
+                  <div class="subcategory-item" data-category="dishwashing">Средства для посуды</div>
+                  <div class="subcategory-item" data-category="bleaches">Отбеливатели</div>
+                </div>
+              </div>
+              <div class="subcategory-group">
+                <div class="subcategory-title">Чистящие средства</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="kitchen-cleaners">Для кухни</div>
+                  <div class="subcategory-item" data-category="bathroom-cleaners">Для ванной</div>
+                  <div class="subcategory-item" data-category="glass-cleaners">Для стекол</div>
+                  <div class="subcategory-item" data-category="universal-cleaners">Универсальные</div>
+                </div>
+              </div>
+              <div class="subcategory-group">
+                <div class="subcategory-title">Бумажная продукция</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="toilet-paper">Туалетная бумага</div>
+                  <div class="subcategory-item" data-category="paper-towels">Бумажные полотенца</div>
+                  <div class="subcategory-item" data-category="napkins">Салфетки</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Подкатегории для электроники -->
+            <div class="subcategories" data-category="electronics">
+              <div class="subcategory-group">
+                <div class="subcategory-title">Мобильные устройства</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="smartphones">Смартфоны</div>
+                  <div class="subcategory-item" data-category="tablets">Планшеты</div>
+                  <div class="subcategory-item" data-category="phone-cases">Чехлы</div>
+                  <div class="subcategory-item" data-category="chargers">Зарядные устройства</div>
+                </div>
+              </div>
+              <div class="subcategory-group">
+                <div class="subcategory-title">Компьютерная техника</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="laptops">Ноутбуки</div>
+                  <div class="subcategory-item" data-category="components">Комплектующие</div>
+                  <div class="subcategory-item" data-category="monitors">Мониторы</div>
+                  <div class="subcategory-item" data-category="peripherals">Периферия</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Подкатегории для одежды и обуви -->
+            <div class="subcategories" data-category="clothing">
+              <div class="subcategory-group">
+                <div class="subcategory-title">Одежда</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="t-shirts">Футболки</div>
+                  <div class="subcategory-item" data-category="jeans">Джинсы</div>
+                  <div class="subcategory-item" data-category="suits">Костюмы</div>
+                  <div class="subcategory-item" data-category="jackets">Куртки</div>
+                </div>
+              </div>
+              <div class="subcategory-group">
+                <div class="subcategory-title">Обувь</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="sneakers">Кроссовки</div>
+                  <div class="subcategory-item" data-category="sandals">Сандалии</div>
+                  <div class="subcategory-item" data-category="boots">Ботинки</div>
+                  <div class="subcategory-item" data-category="shoes">Туфли</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Подкатегории для мебели -->
+            <div class="subcategories" data-category="furniture">
+              <div class="subcategory-group">
+                <div class="subcategory-title">Для дома</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="tables">Столы</div>
+                  <div class="subcategory-item" data-category="chairs">Стулья</div>
+                  <div class="subcategory-item" data-category="wardrobes">Шкафы</div>
+                  <div class="subcategory-item" data-category="beds">Кровати</div>
+                </div>
+              </div>
+              <div class="subcategory-group">
+                <div class="subcategory-title">Офисная мебель</div>
+                <div class="subcategory-items">
+                  <div class="subcategory-item" data-category="chairs-office">Кресла</div>
+                  <div class="subcategory-item" data-category="office-tables">Столы для офиса</div>
+                  <div class="subcategory-item" data-category="document-cabinets">Шкафы для документов</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Mobile Menu -->
+    <div class="mobile-header">
+      <div class="mobile-header-top">
+        <div class="search-container">
+          <input type="text" class="mobile-search" placeholder="Поиск товаров...">
+          <button class="mobile-search-btn">🔍</button>
+        </div>
+      </div>
+      <nav class="bottom-nav">
+        <a href="/index.html" class="nav-item">
+          <img src="/img/home.svg" alt="" class="nav-icon">
+          <span class="nav-text">Главная</span>
         </a>
-        <a href="/heart/heart.html" class="nav-icon">
-          <img src="/img/heart.svg" height="20px" width="20px" alt="">
-          <span>Избранное</span>
+        <a href="/header/catalog.html" class="nav-item">
+          <img src="/img/catalog-icon.svg" alt="" class="nav-icon">
+          <span class="nav-text">Каталог</span>
         </a>
-        <a href="/trash/trash.html" class="nav-icon">
-          <img src="/img/market.svg" height="20px" width="20px" alt="">
-          <span>Корзина</span>
+        <a href="/heart/heart.html" class="nav-item">
+          <img src="/img/heart.svg" alt="" class="nav-icon">
+          <span class="nav-text">Избранное</span>
+        </a>
+        <a href="/trash/trash.html" class="nav-item">
+          <img src="/img/market.svg" alt="" class="nav-icon">
+          <span class="nav-text">Корзина</span>
+        </a>
+        <a href="/account/account.html" class="nav-item">
+          <img src="/img/personal_icon.svg" alt="" class="nav-icon">
+          <span class="nav-text">Аккаунт</span>
         </a>
       </nav>
     </div>
-
-    <!-- Каталог -->
-    <div class="catalog-menu">
-      <div class="catalog-content">
-        <div class="categories">
-          <div class="category-item" data-category="grocery">
-            <span>🛒 Продукты питания</span>
-            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
-          </div>
-          <div class="category-item" data-category="household">
-            <span>🧹 Бытовая химия</span>
-            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
-          </div>
-          <div class="category-item" data-category="electronics">
-            <span>📱 Электроника</span>
-            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
-          </div>
-          <div class="category-item" data-category="clothing">
-            <span>👗 Одежда и обувь</span>
-            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
-          </div>
-          <div class="category-item" data-category="furniture">
-            <span>🪑 Мебель</span>
-            <img src="/img/arrow-right.svg" width="20px" height="20px" alt="">
-          </div>
-        </div>
-
-        <!-- Подкатегории для продуктов -->
-        <div class="subcategories" data-category="grocery">
-          <div class="subcategory-group">
-            <div class="subcategory-title">Бакалея</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Крупы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Макаронные изделия</a>
-              <a href="/categories/categories.html" class="subcategory-item">Растительные масла</a>
-              <a href="/categories/categories.html" class="subcategory-item">Мука</a>
-              <a href="/categories/categories.html" class="subcategory-item">Сахар</a>
-              <a href="/categories/categories.html" class="subcategory-item">Соль</a>
-              <a href="/categories/categories.html" class="subcategory-item">Чай и кофе</a>
-            </div>
-          </div>
-          <div class="subcategory-group">
-            <div class="subcategory-title">Кондитерские изделия</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Конфеты</a>
-              <a href="/categories/categories.html" class="subcategory-item">Шоколад</a>
-              <a href="/categories/categories.html" class="subcategory-item">Печенье</a>
-              <a href="/categories/categories.html" class="subcategory-item">Вафли</a>
-              <a href="/categories/categories.html" class="subcategory-item">Зефир</a>
-              <a href="/categories/categories.html" class="subcategory-item">Торты</a>
-            </div>
-          </div>
-          <div class="subcategory-group">
-            <div class="subcategory-title">Консервация</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Овощные консервы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Фруктовые консервы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Мясные консервы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Рыбные консервы</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подкатегории для бытовой химии -->
-        <div class="subcategories" data-category="household">
-          <div class="subcategory-group">
-            <div class="subcategory-title">Моющие средства</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Порошки</a>
-              <a href="/categories/categories.html" class="subcategory-item">Гели для стирки</a>
-              <a href="/categories/categories.html" class="subcategory-item">Средства для посуды</a>
-              <a href="/categories/categories.html" class="subcategory-item">Отбеливатели</a>
-            </div>
-          </div>
-          <div class="subcategory-group">
-            <div class="subcategory-title">Чистящие средства</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Для кухни</a>
-              <a href="/categories/categories.html" class="subcategory-item">Для ванной</a>
-              <a href="/categories/categories.html" class="subcategory-item">Для стекол</a>
-              <a href="/categories/categories.html" class="subcategory-item">Универсальные</a>
-            </div>
-          </div>
-          <div class="subcategory-group">
-            <div class="subcategory-title">Бумажная продукция</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Туалетная бумага</a>
-              <a href="/categories/categories.html" class="subcategory-item">Бумажные полотенца</a>
-              <a href="/categories/categories.html" class="subcategory-item">Салфетки</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подкатегории для электроники -->
-        <div class="subcategories" data-category="electronics">
-          <div class="subcategory-group">
-            <div class="subcategory-title">Мобильные устройства</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Смартфоны</a>
-              <a href="/categories/categories.html" class="subcategory-item">Планшеты</a>
-              <a href="/categories/categories.html" class="subcategory-item">Чехлы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Зарядные устройства</a>
-            </div>
-          </div>
-          <div class="subcategory-group">
-            <div class="subcategory-title">Компьютерная техника</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Ноутбуки</a>
-              <a href="/categories/categories.html" class="subcategory-item">Комплектующие</a>
-              <a href="/categories/categories.html" class="subcategory-item">Мониторы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Периферия</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подкатегории для одежды и обуви -->
-        <div class="subcategories" data-category="clothing">
-          <div class="subcategory-group">
-            <div class="subcategory-title">Одежда</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Футболки</a>
-              <a href="/categories/categories.html" class="subcategory-item">Джинсы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Костюмы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Куртки</a>
-            </div>
-          </div>
-          <div class="subcategory-group">
-            <div class="subcategory-title">Обувь</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Кроссовки</a>
-              <a href="/categories/categories.html" class="subcategory-item">Сандалии</a>
-              <a href="/categories/categories.html" class="subcategory-item">Ботинки</a>
-              <a href="/categories/categories.html" class="subcategory-item">Туфли</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подкатегории для мебели -->
-        <div class="subcategories" data-category="furniture">
-          <div class="subcategory-group">
-            <div class="subcategory-title">Для дома</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Столы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Стулья</a>
-              <a href="/categories/categories.html" class="subcategory-item">Шкафы</a>
-              <a href="/categories/categories.html" class="subcategory-item">Кровати</a>
-            </div>
-          </div>
-          <div class="subcategory-group">
-            <div class="subcategory-title">Офисная мебель</div>
-            <div class="subcategory-items">
-              <a href="/categories/categories.html" class="subcategory-item">Кресла</a>
-              <a href="/categories/categories.html" class="subcategory-item">Столы для офиса</a>
-              <a href="/categories/categories.html" class="subcategory-item">Шкафы для документов</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </header>
-  <!-- Mobile Menu -->
-  <div class="mobile-header">
-    <div class="mobile-header-top">
-      <div class="search-container">
-        <input type="text" class="mobile-search" placeholder="Поиск товаров...">
-        <button class="mobile-search-btn">🔍</button>
-      </div>
-    </div>
-    <nav class="bottom-nav">
-      <a href="/index.html" class="nav-item">
-        <img src="/img/home.svg" alt="" class="nav-icon">
-        <span class="nav-text">Главная</span>
-      </a>
-      <a href="/header/catalog.html" class="nav-item">
-        <img src="/img/catalog-icon.svg" alt="" class="nav-icon">
-        <span class="nav-text">Каталог</span>
-      </a>
-      <a href="/heart/heart.html" class="nav-item">
-        <img src="/img/heart.svg" alt="" class="nav-icon">
-        <span class="nav-text">Избранное</span>
-      </a>
-      <a href="/trash/trash.html" class="nav-item">
-        <img src="/img/market.svg" alt="" class="nav-icon">
-        <span class="nav-text">Корзина</span>
-      </a>
-      <a href="/account/account.html" class="nav-item">
-        <img src="/img/personal_icon.svg" alt="" class="nav-icon">
-        <span class="nav-text">Аккаунт</span>
-      </a>
-    </nav>
   </div>
   <main>
     <div class="notification" id="notification"></div>
     <div class="container">
-      <div class="products-grid">
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
+      <!-- Блок заголовка категории и сортировки скрыт по умолчанию -->
+      <div class="category-header" id="categoryHeader">
+        <h1 class="category-title" id="categoryTitle"></h1>
+        <!-- Блок сортировки -->
+        <div class="sort-container">
+          <button class="sort-button" onclick="toggleSort()" id="sortButton">
+            <span>Сортировка</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div class="sort-dropdown" id="sortDropdown">
+            <div class="sort-option" data-sort="name-asc" onclick="sortProducts('name-asc', this)">
+              <span>По названию (А-Я)</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <div class="sort-option" data-sort="name-desc" onclick="sortProducts('name-desc', this)">
+              <span>По названию (Я-А)</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <div class="sort-option" data-sort="price-asc" onclick="sortProducts('price-asc', this)">
+              <span>Сначала дешевле</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <div class="sort-option" data-sort="price-desc" onclick="sortProducts('price-desc', this)">
+              <span>Сначала дороже</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
             </div>
           </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
-        <a href="/main.html" class="product-card">
-          <div class="product-image-container">
-            <img src="/img/phone.jpg" alt="Смартфон Example Pro" class="product-image">
-            <div class="flex">
-              <div class="discount-badge">-17%</div>
-              <button class="so" onclick="toggleLike(this)">
-                <img class="heart" src="/img/heart-to-main.svg" alt="Like">
-              </button>
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-title">Смартфон Example Pro 128GB</h3>
-            <div class="sale-badge">Акция</div>
-            <div class="flex">
-              <div class="price-container">
-                <span class="old-price">29 999 ₽</span>
-                <span class="new-price">24 999 ₽</span>
-              </div>
-              <button class="add-to-cart" onclick="addToCart(event, this)">
-                <img src="/img/market.svg" alt="">
-              </button>
-            </div>
-          </div>
-        </a>
+        </div>
       </div>
+
+      <!-- Контейнер для карточек товаров -->
+      <div class="products-grid" id="products-container"></div>
     </div>
   </main>
+
   <script src="/main.js"></script>
   <script src="/header/header.js"></script>
 </body>

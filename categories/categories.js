@@ -141,3 +141,82 @@ function showNotification(message) {
     notification.classList.remove('show');
   }, 3000);
 }
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+        // Элементы на странице
+        const categoriesList = document.querySelector('.categories');
+        const productListContainer = document.querySelector('.product-list');
+        const productCategoryTitle = document.querySelector('.product-category-title');
+        
+        // Функция для рендеринга карточек товаров
+        function renderProducts(products) {
+            productListContainer.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p>Цена: ${product.price} ₽</p>
+                    <button class="like-button" data-id="${product.id}">👍</button>
+                    <button class="notify-button" data-id="${product.id}">Уведомить о поступлении</button>
+                `;
+                productListContainer.appendChild(productCard);
+            });
+        }
+
+        // Функция для отображения категории и товаров этой категории
+        function displayCategory(category) {
+            const filteredProducts = products.filter(product => product.category === category);
+            productCategoryTitle.textContent = category;
+            renderProducts(filteredProducts);
+        }
+
+        // Рендер категорий
+        function renderCategories() {
+            const categories = [...new Set(products.map(product => product.category))];
+            categories.forEach(category => {
+                const categoryItem = document.createElement('li');
+                categoryItem.classList.add('category-item');
+                categoryItem.textContent = category;
+                categoryItem.addEventListener('click', () => displayCategory(category));
+                categoriesList.appendChild(categoryItem);
+            });
+        }
+
+        // Инициализация
+        renderCategories();
+        renderProducts(products); // Изначально показываем все товары
+
+        // Сортировка товаров
+        document.querySelector('.sort-price-asc').addEventListener('click', () => {
+            const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+            renderProducts(sortedProducts);
+        });
+
+        document.querySelector('.sort-price-desc').addEventListener('click', () => {
+            const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+            renderProducts(sortedProducts);
+        });
+
+        // Лайк для товара
+        productListContainer.addEventListener('click', function(event) {
+            if (event.target.classList.contains('like-button')) {
+                const productId = event.target.dataset.id;
+                alert(`Товар с id ${productId} добавлен в избранное!`);
+            }
+        });
+
+        // Уведомление о поступлении
+        productListContainer.addEventListener('click', function(event) {
+            if (event.target.classList.contains('notify-button')) {
+                const productId = event.target.dataset.id;
+                alert(`Вы подписались на уведомление о товаре с id ${productId}!`);
+            }
+        });
+    });
+

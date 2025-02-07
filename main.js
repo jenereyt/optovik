@@ -1,43 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Массив с данными товаров (пример)
-  const productsData = [
-    {
-      image: "/img/phone.jpg",
-      title: "Смартфон Example Pro 128GB",
-      discount: "-17%",
-      oldPrice: "29 999 ₽",
-      newPrice: "24 999 ₽",
-      isOnSale: true
-    },
-    {
-      image: "/img/phone.jpg",
-      title: "Смартфон Example Lite 64GB",
-      discount: "-10%",
-      oldPrice: "19 999 ₽",
-      newPrice: "17 999 ₽",
-      isOnSale: true
-    },
-    {
-      image: "/img/phone.jpg",
-      title: "Смартфон Example Max 256GB",
-      discount: "-5%",
-      oldPrice: "34 999 ₽",
-      newPrice: "32 999 ₽",
-      isOnSale: false
-    }
-    // Добавьте остальные товары по необходимости
-  ];
+  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Функция для отрисовки карточки товара
+  async function fetchProducts() {
+    try {
+      const response = await fetch(`${server}/products/`);
+      if (!response.ok) {
+        throw new Error("Ошибка загрузки товаров");
+      }
+      let products = await response.json();
+      products = products.slice(0, 50);
+      renderProducts(products);
+    } catch (error) {
+      console.error("Ошибка загрузки товаров:", error);
+    }
+  }
+
   function renderProductCard(product) {
+    const isLiked = favorites.includes(String(product.id)); // ID как строка
+    const isInCart = cart.includes(String(product.id));
+
     return `
-      <a href="/main.html" class="product-card">
+      <a href="/main.html" class="product-card" data-id="${product.id}">
         <div class="product-image-container">
-          <img src="${product.image}" alt="${product.title}" class="product-image">
+          <img src="${server}${product.image_url}" alt="${product.title}" class="product-image">
           <div class="flex">
             <div class="discount-badge">${product.discount}</div>
-            <button class="so" onclick="toggleLike(this)">
-              <img class="heart" src="/img/heart-to-main.svg" alt="Like">
+            <button class="so like-button" data-id="${product.id}">
+              <img class="heart" src="${isLiked ? "/img/heart-blue.svg" : "/img/heart-to-main.svg"}" alt="Like">
             </button>
           </div>
         </div>
@@ -46,10 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
           ${product.isOnSale ? '<div class="sale-badge">Акция</div>' : ''}
           <div class="price-and-cart-container">
             <div class="price-container">
-              <span class="old-price">${product.oldPrice}</span>
-              <span class="new-price">${product.newPrice}</span>
+              <span class="old-price">${product.oldPrice} UZS</span>
+              <span class="new-price">${product.newPrice} UZS</span>
             </div>
-            <button class="add-to-cart" onclick="addToCart(event, this)">
+            <button class="add-to-cart cart-button ${isInCart ? 'added-to-cart' : ''}" data-id="${product.id}">
               <img src="/img/market.svg" alt="В корзину">
             </button>
           </div>
@@ -58,134 +48,87 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   }
 
-  // Функция для отрисовки всех товаров
   function renderProducts(products) {
-    const container = document.getElementById('products-container');
-    container.innerHTML = products.map(renderProductCard).join('');
-  }
+    const container = document.getElementById("products-container");
+    container.innerHTML = products.map(renderProductCard).join("");
 
-  // Функция для сортировки товаров
-  let currentSort = '';
-
-  function toggleSort() {
-    const dropdown = document.getElementById('sortDropdown');
-    const button = document.getElementById('sortButton');
-    dropdown.classList.toggle('active');
-    button.classList.toggle('active');
-  }
-
-  document.addEventListener('click', function (event) {
-    const dropdown = document.getElementById('sortDropdown');
-    const button = document.getElementById('sortButton');
-    if (!event.target.closest('.sort-container')) {
-      dropdown.classList.remove('active');
-      button.classList.remove('active');
-    }
-  });
-
-  function sortProducts(method, element) {
-    const sortedProducts = [...productsData];
-    document.querySelectorAll('.sort-option').forEach(option => {
-      option.classList.remove('active');
+    // После рендера вешаем обработчики событий
+    document.querySelectorAll(".like-button").forEach(button => {
+      button.addEventListener("click", toggleLike);
     });
-    if (element) {
-      element.classList.add('active');
-      const sortButton = document.getElementById('sortButton').querySelector('span');
-      sortButton.textContent = element.querySelector('span').textContent;
-    }
-    switch (method) {
-      case 'name-asc':
-        sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case 'name-desc':
-        sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
-        break;
-      case 'price-asc':
-        sortedProducts.sort((a, b) =>
-          parseFloat(a.newPrice.replace(/\s/g, '')) - parseFloat(b.newPrice.replace(/\s/g, ''))
-        );
-        break;
-      case 'price-desc':
-        sortedProducts.sort((a, b) =>
-          parseFloat(b.newPrice.replace(/\s/g, '')) - parseFloat(a.newPrice.replace(/\s/g, ''))
-        );
-        break;
-    }
-    currentSort = method;
-    renderProducts(sortedProducts);
-    toggleSort();
+
+    document.querySelectorAll(".cart-button").forEach(button => {
+      button.addEventListener("click", toggleCart);
+    });
+
+    updateAllIcons();
   }
 
-  // При загрузке страницы отображаем все товары
-  renderProducts(productsData);
+  function toggleLike(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-  // Обработчик клика по элементам подкатегории
-  document.querySelectorAll('.subcategory-item').forEach(item => {
-    item.addEventListener('click', function () {
-      // Получаем название подкатегории
-      const categoryName = this.textContent.trim();
-      
-      // Заполняем заголовок выбранной подкатегории
-      const categoryTitleEl = document.querySelector('.category-title');
-      categoryTitleEl.textContent = categoryName;
-      
-      // Отображаем блок с заголовком и сортировкой (ранее скрытый)
-      const categoryHeader = document.getElementById('categoryHeader');
-      categoryHeader.style.display = 'flex'; // Или block, в зависимости от верстки
-      
-      // Закрываем каталог. Предполагается, что каталог обернут в блок с классом .catalog-menu
-      const catalogMenu = document.querySelector('.catalog-menu');
-      if (catalogMenu) {
-        catalogMenu.classList.remove('active');
+    const button = event.currentTarget;
+    const productId = button.getAttribute("data-id");
+
+    if (favorites.includes(productId)) {
+      favorites = favorites.filter(id => id !== productId);
+    } else {
+      favorites.push(productId);
+    }
+
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    updateProductIcons(productId);
+  }
+
+  function toggleCart(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const button = event.currentTarget;
+    const productId = button.getAttribute("data-id");
+
+    if (cart.includes(productId)) {
+      cart = cart.filter(id => id !== productId);
+    } else {
+      cart.push(productId);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateProductIcons(productId);
+  }
+
+  function updateProductIcons(productId) {
+    document.querySelectorAll(`.product-card[data-id="${productId}"]`).forEach(productElement => {
+      const heartIcon = productElement.querySelector(".heart");
+      const cartButton = productElement.querySelector(".add-to-cart");
+
+      if (favorites.includes(productId)) {
+        heartIcon.src = "/img/heart-blue.svg";
+      } else {
+        heartIcon.src = "/img/heart-to-main.svg";
       }
-      overlay.classList.remove('active');
-      // Если нужно, можно дополнительно вызвать фильтрацию товаров
-      renderProducts(productsData);
+
+      if (cart.includes(productId)) {
+        cartButton.classList.add("added-to-cart");
+        cartButton.style.backgroundColor = "#203864";
+        cartButton.style.transition = "background-color 0.3s";
+        cartButton.querySelector("img").style.filter = "invert(1)";
+      } else {
+        cartButton.classList.remove("added-to-cart");
+        cartButton.style.backgroundColor = "";
+        cartButton.querySelector("img").style.filter = "";
+      }
     });
-  });
+  }
 
-  // Пример функции для переключения "лайка"
-  window.toggleLike = function (button) {
-    event.preventDefault();
-    event.stopPropagation();
-    const heart = button.querySelector('.heart');
-    if (heart.src.includes('heart-to-main.svg')) {
-      heart.src = '/img/heart-blue.svg';
-    } else {
-      heart.src = '/img/heart-to-main.svg';
-    }
-  };
-
-  // Пример функции для работы с корзиной
-  window.addToCart = function (event, button) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (button.classList.contains('added-to-cart')) {
-      alert("Товар удалён из корзины!");
-      button.classList.remove('added-to-cart');
-      button.style.backgroundColor = '';
-      button.querySelector('img').style.filter = '';
-    } else {
-      alert("Товар добавлен в корзину!");
-      button.classList.add('added-to-cart');
-      button.style.backgroundColor = '#203864';
-      button.style.transition = 'background-color 0.3s';
-      button.querySelector('img').style.filter = 'invert(1)';
-    }
-  };
-
-  // Если необходимо, можно также повесить обработчики для категорий (верхнего уровня)
-  document.querySelectorAll('.category-item').forEach(item => {
-    item.addEventListener('click', function () {
-      // При клике на категорию можно обновлять заголовок
-      const categoryTitleEl = document.querySelector('.category-title');
-      categoryTitleEl.textContent = this.querySelector('span').textContent.trim();
-      // Реализуйте логику фильтрации товаров по категории, если нужно
-      renderProducts(productsData);
+  function updateAllIcons() {
+    document.querySelectorAll(".product-card").forEach(productElement => {
+      const productId = productElement.getAttribute("data-id");
+      updateProductIcons(productId);
     });
-  });
+  }
 
-  // Делаем функции toggleSort и sortProducts доступными глобально
-  window.toggleSort = toggleSort;
-  window.sortProducts = sortProducts;
+  fetchProducts();
 });
+

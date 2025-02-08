@@ -6,7 +6,7 @@ body {
 }
 
 /* Cart Container */
-.cart-container {
+#cart-container {
   display: flex;
   gap: 24px;
   padding: 20px;

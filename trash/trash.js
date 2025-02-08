@@ -1,31 +1,4 @@
 class Cart {
-  constructor() {
-    this.items = [
-      {
-        id: 1,
-        name: 'Смартфон Samsung Galaxy A54',
-        seller: 'ООО Электроника',
-        price: 34990,
-        discount: 3000,
-        quantity: 1,
-        image: '/img/phone.jpg',
-        selected: true
-      },
-      {
-        id: 2,
-        name: 'Наушники Sony WH-1000XM4',
-        seller: 'АудиоМир',
-        price: 27990,
-        discount: 2000,
-        quantity: 1,
-        image: '/img/phone.jpg',
-        selected: true
-      }
-    ];
-    this.debt = 15000;
-    this.prepayment = 5000;
-    this.init();
-  }
 
   init() {
     this.render();

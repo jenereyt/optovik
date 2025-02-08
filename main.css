@@ -76,7 +76,6 @@ body {
   position: absolute;
   top: 8px;
   left: 8px;
-  background: #ef4444;
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -150,7 +149,7 @@ body {
   -webkit-box-orient: vertical;
 }
 
-.sale-badge {
+.sale-badge{
   display: inline-block;
   /* Это делает бейдж компактным */
   background: #ef4444;
@@ -164,6 +163,12 @@ body {
   /* Это ограничивает ширину бейджа содержимым */
   white-space: nowrap;
   /* Это предотвращает перенос текста */
+}
+.discount-badge.available{
+  background: #2ecc71;
+}
+.discount-badge.out-of-stock{
+  background: #ef4444;
 }
 
 .price-container {

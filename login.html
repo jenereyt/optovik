@@ -164,7 +164,7 @@
         <i class="fas fa-lock"></i>
       </div>
       <button type="submit">
-        Войти
+        Регистрация
       </button>
     </form>
     <div id="message" class="message"></div>
@@ -203,7 +203,7 @@
         })
         .then(result => {
           const messageEl = document.getElementById('message');
-          messageEl.textContent = 'Успешная авторизация! Добро пожаловать!';
+          messageEl.textContent = 'Успешная регистрация! Добро пожаловать!';
           messageEl.classList.remove('error');
           messageEl.classList.add('success', 'show');
 

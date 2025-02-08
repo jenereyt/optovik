@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/header/header-media.css">
   <link rel="stylesheet" href="/main-media.css">
   <link rel="stylesheet" href="/categories/categories.css">
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="/header/catalog.css">
 </head>
@@ -21,7 +22,6 @@
       <div class="top-bar-content">
         <div class="top-bar-left">
           <a href="/index.html">Главная</a>
-          <span>Город: Ташкент</span>
         </div>
         <div class="top-bar-right">
           <span id="langToggle">Язык: Русский</span>
@@ -49,10 +49,10 @@
             <img src="/img/heart.svg" height="20px" width="20px" alt="">
             <span>Избранное</span>
           </div>
-          <a href="/trash/trash.html" class="nav-icon">
+          <div id="basket" class="nav-icon">
             <img src="/img/market.svg" height="20px" width="20px" alt="">
             <span>Корзина</span>
-          </a>
+          </div>
         </nav>
       </div>
 
@@ -303,8 +303,9 @@
     </div>
   </main>
   <script src="/config.js"></script>
-  <script src="/main.js"></script>
+  <script src="/service/main.js"></script>
   <script src="/header/header.js"></script>
+
 </body>
 
 </html>

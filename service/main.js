@@ -1,15 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let favorites = JSON.parse(localStorage.getItem("favorites"));
+  let favorites = Array.from(new Set(JSON.parse(localStorage.getItem("favorites")) || []));
+  console.log("Текущие избранные:", favorites); // Добавляем отладочный вывод
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   const container = document.getElementById("products-container");
   const favoritesButton = document.getElementById("favorites");
-  
+
   const pageTitle = document.createElement("h1");
   pageTitle.id = "page-title";
   pageTitle.style.fontSize = "30px";
   pageTitle.style.fontWeight = "bold";
   pageTitle.style.margin = "20px 0";
+  pageTitle.style.display = "flex";
+  pageTitle.style.alignItems = "center";
+  pageTitle.style.gap = "10px";
   container.parentNode.insertBefore(pageTitle, container);
+
+  const favoritesCount = document.createElement("span");
+  favoritesCount.id = "favorites-count";
+  favoritesCount.style.fontSize = "20px";
+  favoritesCount.style.color = "#666";
+  favoritesCount.style.display = "none";
+
+  pageTitle.appendChild(favoritesCount);
 
   const emptyFavoritesMessage = document.createElement("p");
   emptyFavoritesMessage.id = "empty-favorites";
@@ -23,6 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return !favorites || !Array.isArray(favorites) || favorites.length === 0;
   }
 
+  function updateFavoritesCount() {
+    // Используем Set для подсчета уникальных значений
+    const uniqueFavorites = new Set(favorites);
+    const count = uniqueFavorites.size;
+    favoritesCount.textContent = `(${count})`;
+  }
+
   async function fetchProducts() {
     try {
       const response = await fetch(`${server}/products/`);
@@ -30,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error("Ошибка загрузки товаров");
       }
       let products = await response.json();
-      products = products.slice(0, 50);
+      products = products.slice(0, 50);  // Limiting to first 50 products
       renderProducts(products);
     } catch (error) {
       console.error("Ошибка загрузки товаров:", error);
@@ -38,29 +57,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function renderProductCard(product) {
-    const isLiked = favorites && favorites.includes(String(product.id));
-    const isInCart = cart.includes(String(product.id));
-
+    const isLiked = favorites && favorites.includes(String(product.product_guid));
+    const isInCart = cart.includes(String(product.product_guid));
+  
+    const imageSrc = product.image_base64 ? `data:image/jpeg;base64,${product.image_base64}` : '/img/nothing.jpg';
+    const availabilityText = product.remains > 0 ? ` в наличии` : 'Нет в наличии';
+    const availabilityClass = product.remains > 0 ? 'available' : 'out-of-stock';
+  
     return `
-      <a href="/main.html" class="product-card" data-id="${product.id}">
+      <a href="/main.html" class="product-card" data-id="${product.product_guid}">
         <div class="product-image-container">
-          <img src="${server}${product.image_url}" alt="${product.title}" class="product-image">
+          <img src="${imageSrc}" alt="${product.product_name}" class="product-image">
           <div class="flex">
-            <div class="discount-badge">${product.discount}</div>
-            <button class="so like-button" data-id="${product.id}">
+            <div class="discount-badge ${availabilityClass}">${availabilityText}</div>
+            <button class="so like-button" data-id="${product.product_guid}">
               <img class="heart" src="${isLiked ? "/img/heart-blue.svg" : "/img/heart-to-main.svg"}" alt="Like">
             </button>
           </div>
         </div>
         <div class="product-info">
-          <h3 class="product-title">${product.title}</h3>
-          ${product.isOnSale ? '<div class="sale-badge">Акция</div>' : ''}
+          <h3 class="product-title">${product.product_name}</h3>
+          <div class="sale-badge">${product.remains} штук</div>
           <div class="price-and-cart-container">
             <div class="price-container">
-              <span class="old-price">${product.oldPrice} UZS</span>
-              <span class="new-price">${product.newPrice} UZS</span>
+              <span class="new-price">${product.price} UZS</span>
             </div>
-            <button class="add-to-cart cart-button ${isInCart ? 'added-to-cart' : ''}" data-id="${product.id}">
+            <button class="add-to-cart cart-button ${isInCart ? 'added-to-cart' : ''}" data-id="${product.product_guid}">
               <img src="/img/market.svg" alt="В корзину">
             </button>
           </div>
@@ -72,7 +94,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderProducts(products) {
     document.getElementById("empty-favorites").style.display = "none";
     pageTitle.innerText = "";
-    
+    favoritesCount.style.display = "none";
+
     container.innerHTML = products.map(renderProductCard).join("");
 
     document.querySelectorAll(".like-button").forEach(button => {
@@ -87,8 +110,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function renderFavorites() {
-    pageTitle.innerText = "Избранное";
-    
+    pageTitle.innerHTML = "Избранное";
+    favoritesCount.style.display = "inline";
+    updateFavoritesCount();
+    pageTitle.appendChild(favoritesCount);
+
     if (isEmptyFavorites()) {
       container.innerHTML = "";
       document.getElementById("empty-favorites").style.display = "block";
@@ -96,14 +122,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.getElementById("empty-favorites").style.display = "none";
-    
+
     try {
       const response = await fetch(`${server}/products/`);
       const products = await response.json();
-      const favoriteProducts = products.filter(product => 
-        favorites.includes(String(product.id))
-      );
       
+      // Фильтрация продуктов по избранным, используя Set для уникальности
+      const uniqueFavorites = new Set(favorites);
+      const favoriteProducts = products.filter(product =>
+        uniqueFavorites.has(String(product.product_guid))
+      );
+
       if (favoriteProducts.length === 0) {
         container.innerHTML = "";
         document.getElementById("empty-favorites").style.display = "block";
@@ -133,24 +162,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const button = event.currentTarget;
     const productId = button.getAttribute("data-id");
+    
+    console.log("До изменения:", favorites); // Добавляем отладку
 
     if (!favorites) {
-      favorites = [];
+        favorites = [];
     }
 
     if (favorites.includes(productId)) {
-      favorites = favorites.filter(id => id !== productId);
+        favorites = favorites.filter(id => id !== productId);
     } else {
-      favorites.push(productId);
+        favorites = Array.from(new Set([...favorites, productId]));
     }
 
+    console.log("После изменения:", favorites); // Добавляем отладку
+    
     localStorage.setItem("favorites", JSON.stringify(favorites));
     updateProductIcons(productId);
 
     if (container.dataset.view === "favorites") {
-      renderFavorites();
+        renderFavorites();
     }
-  }
+}
 
   function toggleCart(event) {
     event.preventDefault();
@@ -205,5 +238,6 @@ document.addEventListener("DOMContentLoaded", function () {
     renderFavorites();
   });
 
+  // Инициализация при загрузке
   fetchProducts();
 });

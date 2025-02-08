@@ -37,6 +37,7 @@ body {
   scale: 1.01;
   transition: 0.3s;
 }
+
 .smth {
   background: #ef4444;
   overflow: hidden;
@@ -204,4 +205,15 @@ body {
 
 .add-to-cart:hover {
   background: #e1e1e2;
+}
+
+#empty-favorites {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 18px;
+  color: #888;
 }

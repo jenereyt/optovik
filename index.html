@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="/header/header-media.css">
   <link rel="stylesheet" href="/main-media.css">
   <link rel="stylesheet" href="/categories/categories.css">
-  <link rel="stylesheet" href="/header/">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="/header/catalog.css">
 </head>
@@ -46,10 +45,10 @@
             <img src="/img/personal_icon.svg" height="20px" width="20px" alt="">
             <span>Войти</span>
           </a>
-          <a href="/heart/heart.html" class="nav-icon">
-            <img src="/img/heart.svg" id="favorites" height="20px" width="20px" alt="">
+          <div id="favorites" class="nav-icon">
+            <img src="/img/heart.svg" height="20px" width="20px" alt="">
             <span>Избранное</span>
-          </a>
+          </div>
           <a href="/trash/trash.html" class="nav-icon">
             <img src="/img/market.svg" height="20px" width="20px" alt="">
             <span>Корзина</span>
@@ -253,6 +252,7 @@
   <main>
     <div class="notification" id="notification"></div>
     <div class="container">
+
       <!-- Блок заголовка категории и сортировки скрыт по умолчанию -->
       <div class="category-header" id="categoryHeader">
         <h1 class="category-title" id="categoryTitle"></h1>
@@ -302,7 +302,7 @@
       <div class="products-grid" id="products-container"></div>
     </div>
   </main>
-<script src="/config.js"></script>
+  <script src="/config.js"></script>
   <script src="/main.js"></script>
   <script src="/header/header.js"></script>
 </body>

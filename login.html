@@ -1,219 +1,232 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход в систему</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход в систему</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            min-height: 100vh;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 400px;
-            transform: translateY(0);
-            transition: all 0.3s ease;
-        }
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+      transform: translateY(0);
+      transition: all 0.3s ease;
+    }
 
-        .login-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
+    .login-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
 
-        h2 {
-            color: #2d3436;
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            font-weight: 600;
-        }
+    h2 {
+      color: #2d3436;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 600;
+    }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
+    .input-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
 
-        .input-group input {
-            width: 100%;
-            padding: 1rem;
-            padding-left: 3rem;
-            border: none;
-            border-radius: 10px;
-            background: #f1f2f6;
-            color: #2d3436;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
+    .input-group input {
+      width: 100%;
+      padding: 1rem;
+      padding-left: 3rem;
+      border: none;
+      border-radius: 10px;
+      background: #f1f2f6;
+      color: #2d3436;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
 
-        .input-group input:focus {
-            outline: none;
-            background: #fff;
-            box-shadow: 0 0 0 2px #4ecdc4;
-        }
+    .input-group input:focus {
+      outline: none;
+      background: #fff;
+      box-shadow: 0 0 0 2px #4ecdc4;
+    }
 
-        .input-group i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a4b0be;
-            transition: all 0.3s ease;
-        }
+    .input-group i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #a4b0be;
+      transition: all 0.3s ease;
+    }
 
-        .input-group input:focus + i {
-            color: #4ecdc4;
-        }
+    .input-group input:focus+i {
+      color: #4ecdc4;
+    }
 
-        button {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(45deg, #4ecdc4, #2fb344);
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    button {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #4ecdc4, #2fb344);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-        button:hover {
-            background: linear-gradient(45deg, #45b7af, #2a9d3b);
-            transform: translateY(-2px);
-        }
+    button:hover {
+      background: linear-gradient(45deg, #45b7af, #2a9d3b);
+      transform: translateY(-2px);
+    }
 
-        button:active {
-            transform: translateY(0);
-        }
+    button:active {
+      transform: translateY(0);
+    }
 
-        .message {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
+    .message {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
 
-        .message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .success {
-            background: #2ecc71;
-            color: white;
-        }
+    .success {
+      background: #2ecc71;
+      color: white;
+    }
 
-        .error {
-            background: #e74c3c;
-            color: white;
-        }
+    .error {
+      background: #e74c3c;
+      color: white;
+    }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
+    @keyframes shake {
 
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-    </style>
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-10px);
+      }
+
+      75% {
+        transform: translateX(10px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="login-container">
-        <h2>Добро пожаловать</h2>
-        <form id="loginForm">
-            <div class="input-group">
-                <input type="text" name="login" placeholder="Введите логин" required>
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="input-group">
-                <input type="password" name="password" placeholder="Введите пароль" required>
-                <i class="fas fa-lock"></i>
-            </div>
-            <button type="submit">
-                Войти
-            </button>
-        </form>
-        <div id="message" class="message"></div>
-    </div>
+  <div class="login-container">
+    <h2>Добро пожаловать</h2>
+    <form id="loginForm">
+      <div class="input-group">
+        <input type="text" name="login" placeholder="Введите логин" required>
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="input-group">
+        <input type="password" name="password" placeholder="Введите пароль" required>
+        <i class="fas fa-lock"></i>
+      </div>
+      <button type="submit">
+        Войти
+      </button>
+    </form>
+    <div id="message" class="message"></div>
+  </div>
 
-    <script src="config.js"></script>
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+  <script src="config.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
 
-            const formData = new FormData(this);
-            const data = {
-                login: formData.get('login'),
-                password: formData.get('password')
-            };
+      const formData = new FormData(this);
+      const data = {
+        login: formData.get('login'),
+        password: formData.get('password')
+      };
 
-            const url = server + '/register/';
+      const url = server + '/register/';
 
-            // Добавляем эффект нажатия на кнопку
-            const button = this.querySelector('button');
-            button.style.transform = 'scale(0.95)';
-            setTimeout(() => button.style.transform = '', 150);
+      // Добавляем эффект нажатия на кнопку
+      const button = this.querySelector('button');
+      button.style.transform = 'scale(0.95)';
+      setTimeout(() => button.style.transform = '', 150);
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка сети');
-                }
-                return response.json();
-            })
-            .then(result => {
-                const messageEl = document.getElementById('message');
-                messageEl.textContent = 'Успешная авторизация! Добро пожаловать!';
-                messageEl.classList.remove('error');
-                messageEl.classList.add('success', 'show');
-                
-                // Добавляем эффект успешной анимации для контейнера
-                const container = document.querySelector('.login-container');
-                container.style.transform = 'scale(1.02)';
-                setTimeout(() => container.style.transform = '', 200);
-            })
-            .catch(error => {
-                const messageEl = document.getElementById('message');
-                messageEl.textContent = 'Ошибка авторизации. Пожалуйста, проверьте данные и попробуйте снова.';
-                messageEl.classList.remove('success');
-                messageEl.classList.add('error', 'show');
-                
-                // Добавляем эффект встряхивания при ошибке
-                const container = document.querySelector('.login-container');
-                container.classList.add('shake');
-                setTimeout(() => container.classList.remove('shake'), 500);
-                
-                console.error('Ошибка:', error);
-            });
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Ошибка сети');
+          }
+          return response.json();
+        })
+        .then(result => {
+          const messageEl = document.getElementById('message');
+          messageEl.textContent = 'Успешная авторизация! Добро пожаловать!';
+          messageEl.classList.remove('error');
+          messageEl.classList.add('success', 'show');
+
+          // Добавляем эффект успешной анимации для контейнера
+          const container = document.querySelector('.login-container');
+          container.style.transform = 'scale(1.02)';
+          setTimeout(() => container.style.transform = '', 200);
+        })
+        .catch(error => {
+          const messageEl = document.getElementById('message');
+          messageEl.textContent = 'Ошибка авторизации. Пожалуйста, проверьте данные и попробуйте снова.';
+          messageEl.classList.remove('success');
+          messageEl.classList.add('error', 'show');
+
+          // Добавляем эффект встряхивания при ошибке
+          const container = document.querySelector('.login-container');
+          container.classList.add('shake');
+          setTimeout(() => container.classList.remove('shake'), 500);
+
+          console.error('Ошибка:', error);
         });
-    </script>
+    });
+  </script>
 </body>
+
 </html>

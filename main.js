@@ -1,6 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  let favorites = JSON.parse(localStorage.getItem("favorites"));
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.getElementById("products-container");
+  const favoritesButton = document.getElementById("favorites");
+  
+  const pageTitle = document.createElement("h1");
+  pageTitle.id = "page-title";
+  pageTitle.style.fontSize = "30px";
+  pageTitle.style.fontWeight = "bold";
+  pageTitle.style.margin = "20px 0";
+  container.parentNode.insertBefore(pageTitle, container);
+
+  const emptyFavoritesMessage = document.createElement("p");
+  emptyFavoritesMessage.id = "empty-favorites";
+  emptyFavoritesMessage.textContent = "Вы пока не добавили товары в избранное.";
+  emptyFavoritesMessage.style.textAlign = "center";
+  emptyFavoritesMessage.style.padding = "50px";
+  emptyFavoritesMessage.style.display = "none";
+  container.parentNode.insertBefore(emptyFavoritesMessage, container);
+
+  function isEmptyFavorites() {
+    return !favorites || !Array.isArray(favorites) || favorites.length === 0;
+  }
 
   async function fetchProducts() {
     try {
@@ -17,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function renderProductCard(product) {
-    const isLiked = favorites.includes(String(product.id)); // ID как строка
+    const isLiked = favorites && favorites.includes(String(product.id));
     const isInCart = cart.includes(String(product.id));
 
     return `
@@ -49,10 +70,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function renderProducts(products) {
-    const container = document.getElementById("products-container");
+    document.getElementById("empty-favorites").style.display = "none";
+    pageTitle.innerText = "";
+    
     container.innerHTML = products.map(renderProductCard).join("");
 
-    // После рендера вешаем обработчики событий
     document.querySelectorAll(".like-button").forEach(button => {
       button.addEventListener("click", toggleLike);
     });
@@ -64,12 +86,57 @@ document.addEventListener("DOMContentLoaded", function () {
     updateAllIcons();
   }
 
+  async function renderFavorites() {
+    pageTitle.innerText = "Избранное";
+    
+    if (isEmptyFavorites()) {
+      container.innerHTML = "";
+      document.getElementById("empty-favorites").style.display = "block";
+      return;
+    }
+
+    document.getElementById("empty-favorites").style.display = "none";
+    
+    try {
+      const response = await fetch(`${server}/products/`);
+      const products = await response.json();
+      const favoriteProducts = products.filter(product => 
+        favorites.includes(String(product.id))
+      );
+      
+      if (favoriteProducts.length === 0) {
+        container.innerHTML = "";
+        document.getElementById("empty-favorites").style.display = "block";
+        return;
+      }
+
+      container.innerHTML = favoriteProducts.map(renderProductCard).join("");
+
+      document.querySelectorAll(".like-button").forEach(button => {
+        button.addEventListener("click", toggleLike);
+      });
+
+      document.querySelectorAll(".cart-button").forEach(button => {
+        button.addEventListener("click", toggleCart);
+      });
+
+      updateAllIcons();
+    } catch (error) {
+      console.error("Ошибка загрузки избранных товаров:", error);
+      document.getElementById("empty-favorites").style.display = "block";
+    }
+  }
+
   function toggleLike(event) {
     event.preventDefault();
     event.stopPropagation();
 
     const button = event.currentTarget;
     const productId = button.getAttribute("data-id");
+
+    if (!favorites) {
+      favorites = [];
+    }
 
     if (favorites.includes(productId)) {
       favorites = favorites.filter(id => id !== productId);
@@ -79,6 +146,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     localStorage.setItem("favorites", JSON.stringify(favorites));
     updateProductIcons(productId);
+
+    if (container.dataset.view === "favorites") {
+      renderFavorites();
+    }
   }
 
   function toggleCart(event) {
@@ -103,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const heartIcon = productElement.querySelector(".heart");
       const cartButton = productElement.querySelector(".add-to-cart");
 
-      if (favorites.includes(productId)) {
+      if (favorites && favorites.includes(productId)) {
         heartIcon.src = "/img/heart-blue.svg";
       } else {
         heartIcon.src = "/img/heart-to-main.svg";
@@ -129,6 +200,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  favoritesButton.addEventListener("click", function () {
+    container.dataset.view = "favorites";
+    renderFavorites();
+  });
+
   fetchProducts();
 });
-

@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+// import { fetchProducts } from "./fetch.js";
+
   // Инициализация основных переменных
   let favorites = [];
   let cart = [];
@@ -39,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!container) {
     console.error("Container element not found!");
-    return;
   }
 
   function hideAllMessages() {
@@ -156,6 +156,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  export function renderProducts(products) {
+    try {
+      container.dataset.view = "products";
+      hideAllMessages();
+  
+      pageTitle.innerHTML = "";
+      favoritesCount.style.display = "none";
+  
+      container.innerHTML = products.map(renderProductCard).join("");
+      attachEventListeners();
+      updateAllIcons();
+    } catch (error) {
+      console.error("Ошибка отображения товаров:", error);
+      container.innerHTML = '<p class="error-message">Ошибка отображения товаров.</p>';
+    }
+  }
+
   function renderProductCard(product) {
     if (!product || !product.product_guid) {
       console.warn('Invalid product data:', product);
@@ -204,22 +221,8 @@ document.addEventListener("DOMContentLoaded", function () {
         </a>
     `;
   }
-  function renderProducts(products) {
-    try {
-      container.dataset.view = "products";
-      hideAllMessages();
-
-      pageTitle.innerHTML = "";
-      favoritesCount.style.display = "none";
-
-      container.innerHTML = products.map(renderProductCard).join("");
-      attachEventListeners();
-      updateAllIcons();
-    } catch (error) {
-      console.error("Error rendering products:", error);
-      container.innerHTML = '<p class="error-message">Ошибка отображения товаров.</p>';
-    }
-  }
+  
+  
 
   async function renderFavorites() {
     try {
@@ -538,6 +541,12 @@ document.addEventListener("DOMContentLoaded", function () {
     renderCart();
   };
 
+  
+
   // Инициализация страницы
   fetchProducts();
-});
+
+
+
+
+
